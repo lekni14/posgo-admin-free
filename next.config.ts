@@ -4,6 +4,16 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http', // Use 'http' for local development
+        hostname: '127.0.0.1', // Or 'localhost'
+        port: '3000', // Specify the port your backend runs on
+        pathname: '/public/assets/img/**', // Optional: restrict to a specific path
+      },
+    ],
+  },
   // async redirects() {
   //   return [
   //     {

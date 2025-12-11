@@ -11,14 +11,14 @@ const TooltipIcons = () => {
       <li>
         <Tooltip title="Pdf">
           <Link href="#">
-            <img src="assets/img/icons/pdf.svg" alt="img" />
+            <img src="/assets/img/icons/pdf.svg" alt="img" />
           </Link>
         </Tooltip>
       </li>
       <li>
         <Tooltip title="Excel">
           <Link href="#">
-            <img src="assets/img/icons/excel.svg" alt="img" />
+            <img src="/assets/img/icons/excel.svg" alt="img" />
           </Link>
         </Tooltip>
       </li>

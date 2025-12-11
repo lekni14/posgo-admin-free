@@ -40,7 +40,8 @@ const ThemeSettings = () => {
   });
 
   // Local state for theme settings
-  const [dataLayout, setDataLayout] = useState(getInitialState().dataLayout);
+  // const [dataLayout, setDataLayout] = useState(getInitialState().dataLayout);
+  const [dataLayout, setDataLayout] = useState("detached")
   const [dataWidth, setDataWidth] = useState(getInitialState().dataWidth);
   const [dataTopBar, setDataTopBar] = useState(getInitialState().dataTopBar);
   const [dataTopBarColor, setDataTopBarColor] = useState(

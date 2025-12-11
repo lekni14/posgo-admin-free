@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 export default function Header() {
   const route = all_routes;
   const [toggle, SetToggle] = useState(false);
-  const [flagImage, setFlagImage] = useState("assets/img/flags/us-flag.svg");
+  const [flagImage, setFlagImage] = useState("/assets/img/flags/us-flag.svg");
   const pathname = usePathname(); // Use Next.js hook for current route
   const [expandMenus, setExpandMenus] = useState(false); // Local state for expandMenus
   const [dataLayout, setDataLayout] = useState("default"); // Local state for dataLayout
@@ -91,13 +91,13 @@ export default function Header() {
             onMouseOver={expandMenuOpen}
           >
             <Link href="/dashboard" className="logo logo-normal">
-              <img src="assets/img/logo.png" alt="img" />
+              <img src="/assets/img/logo.png" alt="img" />
             </Link>
             <Link href="/dashboard" className="logo logo-white">
-              <img src="assets/img/logo-white.png" alt="img" />
+              <img src="/assets/img/logo-white.png" alt="img" />
             </Link>
             <Link href="/dashboard" className="logo-small">
-              <img src="assets/img/logo-small.png" alt="img" />
+              <img src="//assets/img/logo-small.png" alt="img" />
             </Link>
             <Link
               id="toggle_btn"
@@ -152,7 +152,7 @@ export default function Header() {
                     <span className="input-group-text">
                       <kbd className="d-flex align-items-center">
                         <img
-                          src="assets/img/icons/command.svg"
+                          src="/assets/img/icons/command.svg"
                           alt="img"
                           className="me-1"
                         />
@@ -175,7 +175,7 @@ export default function Header() {
                 <span className="user-info">
                   <span className="user-letter">
                     <img
-                      src="assets/img/store/store-01.png"
+                      src="/assets/img/store/store-01.png"
                       alt="Store Logo"
                       className="img-fluid"
                     />
@@ -188,7 +188,7 @@ export default function Header() {
               <div className="dropdown-menu dropdown-menu-right">
                 <Link href="#" className="dropdown-item">
                   <img
-                    src="assets/img/store/store-01.png"
+                    src="/assets/img/store/store-01.png"
                     alt="Store Logo"
                     className="img-fluid"
                   />
@@ -196,7 +196,7 @@ export default function Header() {
                 </Link>
                 <Link href="#" className="dropdown-item">
                   <img
-                    src="assets/img/store/store-02.png"
+                    src="/assets/img/store/store-02.png"
                     alt="Store Logo"
                     className="img-fluid"
                   />
@@ -204,7 +204,7 @@ export default function Header() {
                 </Link>
                 <Link href="#" className="dropdown-item">
                   <img
-                    src="assets/img/store/store-03.png"
+                    src="/assets/img/store/store-03.png"
                     alt="Store Logo"
                     className="img-fluid"
                   />
@@ -212,7 +212,7 @@ export default function Header() {
                 </Link>
                 <Link href="#" className="dropdown-item">
                   <img
-                    src="assets/img/store/store-04.png"
+                    src="/assets/img/store/store-04.png"
                     alt="Store Logo"
                     className="img-fluid"
                   />
@@ -361,7 +361,7 @@ export default function Header() {
                   // onClick={() => changeLanguage("en")}
                 >
                   <img
-                    src="assets/img/flags/english.svg"
+                    src="/assets/img/flags/english.svg"
                     alt="img"
                     height={16}
                   />
@@ -373,7 +373,7 @@ export default function Header() {
                   // onClick={() => changeLanguage("fr")}
                 >
                   <img
-                    src="assets/img/flags/arabic.svg"
+                    src="/assets/img/flags/arabic.svg"
                     alt="img"
                     height={16}
                   />{" "}
@@ -426,7 +426,7 @@ export default function Header() {
                           <span className="avatar flex-shrink-0">
                             <img
                               alt="Img"
-                              src="assets/img/profiles/avatar-13.jpg"
+                              src="/assets/img/profiles/avatar-13.jpg"
                             />
                           </span>
                           <div className="flex-grow-1">
@@ -446,7 +446,7 @@ export default function Header() {
                           <span className="avatar flex-shrink-0">
                             <img
                               alt="Img"
-                              src="assets/img/profiles/avatar-03.jpg"
+                              src="/assets/img/profiles/avatar-03.jpg"
                             />
                           </span>
                           <div className="flex-grow-1">
@@ -465,7 +465,7 @@ export default function Header() {
                           <span className="avatar flex-shrink-0">
                             <img
                               alt="Img"
-                              src="assets/img/profiles/avatar-17.jpg"
+                              src="/assets/img/profiles/avatar-17.jpg"
                             />
                           </span>
                           <div className="flex-grow-1">
@@ -484,7 +484,7 @@ export default function Header() {
                           <span className="avatar flex-shrink-0">
                             <img
                               alt="Img"
-                              src="assets/img/profiles/avatar-02.jpg"
+                              src="/assets/img/profiles/avatar-02.jpg"
                             />
                           </span>
                           <div className="flex-grow-1">
@@ -529,7 +529,7 @@ export default function Header() {
                 <span className="user-info p-0">
                   <span className="user-letter">
                     <img
-                      src="assets/img/profiles/avator1.jpg"
+                      src="/assets/img/profiles/avator1.jpg"
                       alt="Img"
                       className="img-fluid"
                     />
@@ -539,7 +539,7 @@ export default function Header() {
               <div className="dropdown-menu menu-drop-user">
                 <div className="profileset d-flex align-items-center">
                   <span className="user-img me-2">
-                    <img src="assets/img/profiles/avator1.jpg" alt="Img" />
+                    <img src="/assets/img/profiles/avator1.jpg" alt="Img" />
                   </span>
                   <div>
                     <h6 className="fw-medium">John Smilga</h6>
