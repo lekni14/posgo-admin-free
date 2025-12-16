@@ -9,12 +9,12 @@ import "../style/fonts/feather/css/iconfont.css";
 import BootstrapJs from "../components/bootstrap-js/bootstrapjs";
 
 export const metadata = {
-  title: "Dreams POS - Inventory Management & Admin Dashboard Template",
+  title: "PosGo POS - Inventory Management & Admin Dashboard Template",
   description:
-    "Dreams POS is a powerful Bootstrap-based Inventory Management Admin Template designed for businesses, offering seamless invoicing, project tracking, and estimates.",
+    "PosGo POS is a powerful Bootstrap-based Inventory Management Admin Template designed for businesses, offering seamless invoicing, project tracking, and estimates.",
   keywords:
     "inventory management, admin dashboard, bootstrap template, invoicing, estimates, business management, responsive admin, POS system",
-  author: "Dreams Technologies",
+  author: "PosGo Technologies",
   icons: {
     icon: "favicon.png",
     shortcut: "favicon.png", // Add shortcut icon for better support
