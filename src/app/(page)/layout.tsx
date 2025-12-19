@@ -14,8 +14,8 @@ export default function PageLayout({
       <Header />
       <Sidebar />
       {/* <HorizontalSidebar /> */}
-      <TwoColumnSidebar />
-      <ThemeSettings />
+      {/* <TwoColumnSidebar /> */}
+      {/* <ThemeSettings /> */}
       {children}
     </div>
   );

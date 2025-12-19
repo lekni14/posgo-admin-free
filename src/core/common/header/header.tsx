@@ -80,15 +80,11 @@ export default function Header() {
         <div className="main-header">
           <div
             className={`header-left
-             ${toggle ? "" : "active"}
-             ${
-               expandMenus || dataLayout === "layout-hovered"
-                 ? "expand-menu"
-                 : ""
-             }
+             ${toggle ? "" : "active expand-menu"}
+             
              `}
-            onMouseLeave={expandMenu}
-            onMouseOver={expandMenuOpen}
+            // onMouseLeave={expandMenu}
+            // onMouseOver={expandMenuOpen}
           >
             <Link href="/dashboard" className="logo logo-normal">
               <img src="/assets/img/logo.png" alt="img" />
@@ -99,7 +95,7 @@ export default function Header() {
             <Link href="/dashboard" className="logo-small">
               <img src="//assets/img/logo-small.png" alt="img" />
             </Link>
-            <Link
+            {/* <Link
               id="toggle_btn"
               href="#"
               style={{
@@ -113,7 +109,7 @@ export default function Header() {
               onClick={handlesidebar}
             >
               <ChevronsLeft className="feather-16" />
-            </Link>
+            </Link> */}
           </div>
           {/* /Logo */}
           <Link
@@ -132,41 +128,12 @@ export default function Header() {
           <ul className="nav user-menu">
             {/* Search */}
             <li className="nav-item nav-searchinputs">
-              <div className="top-nav-search">
-                <Link href="#" className="responsive-search">
-                  <Search />
-                </Link>
-                <form action="#" className="dropdown">
-                  <div
-                    className="searchinputs input-group dropdown-toggle"
-                    id="dropdownMenuClickable"
-                    data-bs-toggle="dropdown"
-                    data-bs-auto-close="outside"
-                  >
-                    <input type="text" placeholder="Search" />
-                    <div className="search-addon">
-                      <span>
-                        <i className="ti ti-search" />
-                      </span>
-                    </div>
-                    <span className="input-group-text">
-                      <kbd className="d-flex align-items-center">
-                        <img
-                          src="/assets/img/icons/command.svg"
-                          alt="img"
-                          className="me-1"
-                        />
-                        K
-                      </kbd>
-                    </span>
-                  </div>
-                </form>
-              </div>
+              
             </li>
             {/* /Search */}
 
             {/* Select Store */}
-            <li className="nav-item dropdown has-arrow main-drop select-store-dropdown">
+            {/* <li className="nav-item dropdown has-arrow main-drop select-store-dropdown">
               <Link
                 href="#"
                 className="dropdown-toggle nav-link select-store"
@@ -219,7 +186,7 @@ export default function Header() {
                   Grocery Eden
                 </Link>
               </div>
-            </li>
+            </li> */}
             {/* /Select Store */}
 
             <li className="nav-item dropdown link-nav">
@@ -391,13 +358,6 @@ export default function Header() {
               >
                 {/* <i data-feather="maximize" /> */}
                 <i className="ti ti-maximize"></i>
-              </Link>
-            </li>
-            <li className="nav-item nav-item-box">
-              <Link href="/email">
-                {/* <i data-feather="mail" /> */}
-                <i className="ti ti-mail"></i>
-                <span className="badge rounded-pill">1</span>
               </Link>
             </li>
             {/* Notifications */}

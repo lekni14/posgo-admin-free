@@ -3,7 +3,7 @@ import { all_routes } from "@/data/all_routes";
 const route = all_routes;
 export const SidebarData = [
   {
-    label: "Main",
+    label: "",
     submenuOpen: true,
     showSubRoute: false,
     submenuHdr: "Main",
@@ -15,19 +15,62 @@ export const SidebarData = [
         showSubRoute: false,
       },
       {
-        label: "My Business",
+        label: "จัดการร้านค้า",
         icon: "briefcase",
-        submenu: true,
+        submenu: false,
         showSubRoute: false,
 
-        submenuItems: [
-          { label: "จัดการสาขา", link: "/my-business/branchs", icon: "pencil" },
-          { label: "จัดการคู่ค้า", link: "/my-business/contacts" },
-          { label: "จัดการผู้ใช้งาน", link: "/my-business/users" },
-        ],
+        // submenuItems: [
+        //   { label: "จัดการสาขา", link: "/my-business/branchs", icon: "pencil" },
+        //   { label: "จัดการคู่ค้า", link: "/my-business/contacts" },
+        //   { label: "จัดการผู้ใช้งาน", link: "/my-business/users" },
+        // ],
       },
+      // {
+      //   label: "Report",
+      //   icon: "chart-infographic",
+      //   submenu: false,
+      //   showSubRoute: false,
+      // },
+      
     ],
   },
+  {
+    label: "Report",
+    submenuOpen: true,
+    showSubRoute: false,
+    submenuHdr: "Main",
+    submenuItems: [
+      {
+        label: "Report",
+        icon: "chart-infographic",
+        submenu: false,
+        showSubRoute: false,
+      },
+    ]
+  },
+  {
+    label: "Users",
+    submenuOpen: true,
+    showSubRoute: false,
+    submenuHdr: "Main",
+    submenuItems: [
+      {
+        label: "จัดการผู้ใช้งาน",
+        icon: "users",
+        submenu: false,
+        showSubRoute: false,
+        link: "/users",
+      },
+      {
+        label: "บทบาท & สิทธิ์การเข้าถึง",
+        icon: "user-shield",
+        submenu: false,
+        showSubRoute: false,
+        link: "/roles-permissions",
+      },
+    ]
+  }
 ];
 // export const SidebarData = [
 //   {

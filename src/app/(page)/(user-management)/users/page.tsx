@@ -1,17 +1,16 @@
 "use client";
-/* eslint-disable @next/next/no-img-element */
 
-import React from "react";
-import { userlisadata } from "@/core/json/users";
-import Link from "next/link";
-import TooltipIcons from "@/core/common/tooltip-content/tooltipIcons";
-import RefreshIcon from "@/core/common/tooltip-content/refresh";
 import CollapesIcon from "@/core/common/tooltip-content/collapes";
-import Table from "@/core/common/pagination/datatable";
+import RefreshIcon from "@/core/common/tooltip-content/refresh";
+import TooltipIcons from "@/core/common/tooltip-content/tooltipIcons";
 import AddUsers from "@/core/modals/usermanagement/addusers";
 import EditUser from "@/core/modals/usermanagement/edituser";
+import Link from "next/link";
 
-export default function UsersComponent() {
+import Table from "@/core/common/pagination/datatable";
+import { userlisadata } from "@/core/json/users";
+
+export default function Users() {
   const dataSource = userlisadata;
 
   const columns = [
@@ -21,7 +20,7 @@ export default function UsersComponent() {
       render: (text: any, record: any) => (
         <span className="userimgname">
           <Link href="#" className="avatar avatar-md me-2">
-            <img alt="" src={"/" + record.img} />
+            <img alt="" src={record.img} />
           </Link>
           <div>
             <Link href="#">{text}</Link>
@@ -108,7 +107,6 @@ export default function UsersComponent() {
       ),
     },
   ];
-
   return (
     <div>
       <div className="page-wrapper">
@@ -116,7 +114,7 @@ export default function UsersComponent() {
           <div className="page-header">
             <div className="add-item d-flex">
               <div className="page-title">
-                <h4>จัดการผู้ใช้งาน</h4>
+                <h4>User List</h4>
                 <h6>Manage Your Users</h6>
               </div>
             </div>

@@ -37,6 +37,20 @@ export const SidebarData1 = [
             route: "/sales-dashboard",
             subRoutes: [],
           },
+          {
+            tittle: 'Roles & Permissions',
+            hasSubRoute: false,
+            showSubRoute: false,
+            route: "/roles-permissions",
+            subRoutes: [],
+          },
+          {
+            tittle: 'Roles & Permissions',
+            hasSubRoute: false,
+            showSubRoute: false,
+            route: "/roles-permissions",
+            subRoutes: [],
+          },
         ],
       },
       {

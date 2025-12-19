@@ -300,7 +300,7 @@ ul.tabs.owl-carousel.pos-category {
 }
 
 .pos-category .owl-item.active {
-  border-color: #FE9F43;
+  border-color: #ff6341;
 }
 
 .pos-category .slick-track .slick-slide:last-child {
@@ -746,12 +746,12 @@ table tbody td .action-table-data a .action-edit {
 .custom-active-hassubroute-false a {
   background: rgba(254, 159, 67, 0.08);
   border-radius: 5px;
-  color: #fe9f43;
+  color: #ff6341;
 }
 
 .custom-active-hassubroute-false a span.custom-active-span,
 .custom-active-hassubroute-false a svg {
-  color: #fe9f43 !important;
+  color: #ff6341 !important;
 }
 
 .input-blocks.search-form i {
@@ -960,7 +960,7 @@ div.rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-draggin
 
 .pos-category5 li:hover,
 .pos-category5 li.active {
-  border-color: #FE9F43;
+  border-color: #ff6341;
 }
 
 .pos-category5 li a img {
@@ -1042,8 +1042,8 @@ div.rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-draggin
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #FE9F43;
-  border-color: #FE9F43;
+  background: #ff6341;
+  border-color: #ff6341;
 
   a:not([href]):not([class]) {
     color: #fff;
@@ -1051,7 +1051,7 @@ div.rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-draggin
 }
 
 .ant-pagination .ant-pagination-item-active:hover {
-  border-color: #FE9F43;
+  border-color: #ff6341;
 
 }
 
@@ -1077,7 +1077,7 @@ div.rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-draggin
 }
 
 .pos-category3 li.active {
-  border-color: #FE9F43;
+  border-color: #ff6341;
 }
 
 .input-groupicon.calender-input svg {
@@ -1213,7 +1213,7 @@ div.rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-draggin
     }
 
     table td.p-datepicker-today>span {
-      background-color: #FE9F43;
+      background-color: #ff6341;
       color: #fff;
     }
   }
@@ -1290,7 +1290,7 @@ div.rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-draggin
 }
 
 .border-primary {
-  border-color: #FE9F43 !important;
+  border-color: #ff6341 !important;
 }
 
 .todo-accordion {
@@ -1621,7 +1621,7 @@ div.rti--container {
   &.custom-active-hassubroute-false {
     a {
       i {
-        color: #FE9F43 !important;
+        color: #ff6341 !important;
       }
     }
   }

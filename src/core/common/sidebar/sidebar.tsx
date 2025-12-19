@@ -65,8 +65,8 @@ export default function Sidebar() {
           expandMenus || dataLayout === "layout-hovered" ? "expand-menu" : ""
         }`}
         id="sidebar"
-        onMouseLeave={expandMenu}
-        onMouseOver={expandMenuOpen}
+        // onMouseLeave={expandMenu}
+        // onMouseOver={expandMenuOpen}
       >
         <>
           {/* Logo */}
