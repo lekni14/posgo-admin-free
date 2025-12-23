@@ -217,9 +217,9 @@ function mapBackendToFrontend(backend: BackendUserEntity): User {
 // ========================================
 // Inventory Service
 // ========================================
-export class InventoryService extends BaseService {
+export class UserService extends BaseService {
   constructor() {
-    super("/inventory/material"); // Backend API endpoint
+    super("/user/posgo"); // Backend API endpoint
   }
 
   /**
@@ -244,7 +244,7 @@ export class InventoryService extends BaseService {
     // Call backend API
     const response = await this.get<
       BackendPaginatedResponse<BackendUserEntity>
-    >(``, {
+    >(`/getlistfilter`, {
       params: queryParams,
     });
 
@@ -339,4 +339,4 @@ export class InventoryService extends BaseService {
 }
 
 // Export singleton instance
-export const inventoryService = new InventoryService();
+export const userService = new UserService();

@@ -9,8 +9,26 @@ import Link from "next/link";
 
 import Table from "@/core/common/pagination/datatable";
 import { userlisadata } from "@/core/json/users";
+import { useSearchUsers } from "@/hooks/use-user";
+import { useState } from "react";
 
 export default function Users() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+
+  // เรียก API เมื่อมี search query
+  const {
+    data: searchResult,
+    isLoading,
+    error,
+  } = useSearchUsers(
+    {
+      keyword: '',
+      page: 1,
+      limit: 50, // เพิ่ม limit เพื่อให้แสดงผลได้มากขึ้น
+    },
+  );
+  console.log(searchResult)
   const dataSource = userlisadata;
 
   const columns = [

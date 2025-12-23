@@ -1,7 +1,7 @@
 import { waitForConfig } from '@/stores/app-store';
 import { STORAGE_KEYS, OAUTH_TOKEN_KEYS } from '@/lib/constants/storage';
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 
 // ✅ Constants
 const DEFAULT_TIMEOUT = 30000;
@@ -140,7 +140,8 @@ class ApiClientService {
 
     // Show error toast for all other HTTP errors
     if (typeof window !== 'undefined') {
-      toast.error(errorMessage);
+      // toast.error(errorMessage);
+      console.log(errorMessage)
     }
   }
 
