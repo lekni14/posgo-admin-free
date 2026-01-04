@@ -110,6 +110,9 @@ class ApiClientService {
     client.interceptors.response.use(
       (response) => response,
       (error) => {
+        if(error.config.url === '/admin/login'){
+          this.handleInitializationError()
+        }
         // Handle 401 errors - immediately logout, no refresh attempts
         if (error.response?.status === 401) {
           console.warn('🔐 401 Unauthorized detected - initiating logout');

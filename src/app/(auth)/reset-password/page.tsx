@@ -1,7 +1,9 @@
-import ResetpasswordComponent from "@/components/pages/resetpassword/resetpassword";
+import ResetpasswordThreeComponent from "@/components/pages/resetpassword/resetpasswordThree";
 
-export default function ReserPassword(){
-    return(
-        <><ResetpasswordComponent /></>
-    )
+export default function ResetPassword3() {
+  return (
+    <>
+      <ResetpasswordThreeComponent />
+    </>
+  );
 }

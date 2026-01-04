@@ -100,6 +100,7 @@ export class BaseService {
    * GET request ที่ return single response
    */
   protected async get<T = any>(endpoint: string, options?: any): Promise<T> {
+    console.log('get')
     return this.request<T>('GET', endpoint, undefined, options);
   }
 

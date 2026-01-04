@@ -33,15 +33,19 @@ export const userKeys = {
  * ```
  */
 export function useSearchUsers(params: UserSearchParams, enabled = true) {
-  return useQuery<UserSearchResponse>({
-    queryKey: userKeys.search(params),
-    queryFn: async () => {
-      return userService.search(params);
-    },
-    enabled: enabled && !!params.keyword && params.keyword.trim().length > 0,
-    staleTime: 30 * 1000, // 30 seconds (shorter for search results)
-    retry: false, // ไม่ retry เมื่อเกิด error
+   return useQuery<UserSearchResponse>({
+    queryKey: userKeys.search(params), // Unique key for caching
+    queryFn: async () => userService.search(params), // Function that fetches the data
   });
+  // return useQuery<UserSearchResponse>({
+  //   queryKey: userKeys.search(params),
+  //   queryFn: async () => {
+  //     return userService.search(params);
+  //   },
+  //   enabled: enabled && !!params.keyword && params.keyword.trim().length > 0,
+  //   staleTime: 30 * 1000, // 30 seconds (shorter for search results)
+  //   retry: false, // ไม่ retry เมื่อเกิด error
+  // });
 }
 
 /**

@@ -1,6 +1,9 @@
 "use client";
 
+import axios from "axios";
+import { apiClient } from "./api-client.service";
 import { BaseService } from "./base.service";
+import { waitForConfig } from "@/stores/app-store";
 
 // ========================================
 // Backend Response Types
@@ -78,19 +81,16 @@ export interface User {
   deleted_id: string;
 }
 
-export interface UserSearchParams {
-  keyword?: string;
-  page?: number;
-  limit?: number;
+export interface LoginCredentials {
+  username: string;
+  password: string;
 }
 
-export interface UserSearchResponse {
-  data: User[];
-  total: number;
-  page: number;
-  limit: number;
-  hasNext: boolean;
-  hasPrev: boolean;
+export interface LoginResponse {
+  accessToken: string;
+  expiredAt: string;
+  refreshToken: string;
+  userInfo: User;
 }
 
 // ========================================
@@ -202,69 +202,44 @@ function mapBackendToFrontend(backend: BackendUserEntity): User {
 // ========================================
 // Inventory Service
 // ========================================
-export class UserService extends BaseService {
+export class AuthService extends BaseService {
   constructor() {
-    super("/user/posgo"); // Backend API endpoint
+    super("/auth"); // Backend API endpoint
   }
 
   /**
    * Search Inventorys by keyword
    * Backend: GET /donation/Inventorys/search?keyword=xxx&page=1&limit=10
    */
-  async search(params: UserSearchParams): Promise<UserSearchResponse> {
-    const queryParams: Record<string, any> = {};
-    console.log(params);
-    if (params.keyword) {
-      queryParams.keyword = params.keyword.trim();
-    }
-    if (params.page) {
-      queryParams.page = params.page;
-    }
-    if (params.limit) {
-      queryParams.limit = params.limit;
-    }
+  async login(credentials: LoginCredentials): Promise<LoginResponse> {
+
+    const config = await waitForConfig();
+    console.log(credentials);
+
     console.log("search");
     // Call backend API
-    const response = await this.get<
-      BackendPaginatedResponse<BackendUserEntity>
-    >(`/getlistfilter`, {
-      params: queryParams,
-    });
-
+    // const response = await apiClient.post<
+    //   BackendResponse<WalkInRegistrationResult>
+    // >("/admin/login", credentials);
+    const response = await axios.post<LoginResponse>(`https://apiuat.posgo.app/api/v1/auth/admin/login`, credentials);
+    console.log(response)
     // Console log response
-    console.log("🔵 [Inventory API] GET /inventorys/material", {
+    console.log("🔵 [Inventory API] GET /admin/login", {
       endpoint: "/inventorys/material?page=1&limit=50",
       method: "GET",
-      params: queryParams,
       response: response,
     });
-
-    // Transform backend response to frontend format
-    if (!response.success || !response.data || !response.pagination) {
-      return {
-        data: [],
-        total: 0,
-        page: params.page || 1,
-        limit: params.limit || 10,
-        hasNext: false,
-        hasPrev: false,
-      };
+    if (!response.success || !response.data) {
+      throw new Error(
+        response.message || "Failed to register donor via walk-in"
+      );
     }
 
-    return {
-      data: response.data.map(mapBackendToFrontend),
-      total: response.pagination.total,
-      page: response.pagination.page,
-      limit: response.pagination.limit,
-      hasNext: response.pagination.has_next,
-      hasPrev: response.pagination.has_prev,
-    };
+    // ดึงข้อมูล donor จาก response โดยใช้ donor_id เพื่อดึงข้อมูลเต็ม
+    const donorId = response.data.donor_id;
+    return this.getById(donorId);
   }
 
-  /**
-   * Get Inventory by ID
-   * Backend: GET /donation/Inventorys/:id
-   */
   async getById(id: string): Promise<User> {
     const response = await this.get<BackendResponse<BackendUserEntity>>(
       `/${id}`
@@ -284,42 +259,7 @@ export class UserService extends BaseService {
 
     return mapBackendToFrontend(response.data);
   }
-
-  /**
-   * Register new Inventory via walk-in registration
-   * Backend: POST /donation/walk-in
-   * สร้าง Inventory ใหม่พร้อม donation record
-   *
-   * @param payload - WalkInRegistrationPayload ที่เตรียมไว้แล้วจาก component
-   */
-  async register(payload: WalkInRegistrationPayload): Promise<User> {
-    // Call backend API - use absolute path
-    // Since basePath is /donation/Inventorys, we need to call the API directly
-    // We'll use apiClient directly for this endpoint
-    const { apiClient } = await import("./api-client.service");
-    const response = await apiClient.post<
-      BackendResponse<WalkInRegistrationResult>
-    >("/donation/walk-in", payload);
-
-    // Console log response
-    console.log("🔵 [Inventory API] POST /donation/walk-in", {
-      endpoint: "/donation/walk-in",
-      method: "POST",
-      payload: payload,
-      response: response,
-    });
-
-    if (!response.success || !response.data) {
-      throw new Error(
-        response.message || "Failed to register Inventory via walk-in"
-      );
-    }
-
-    // ดึงข้อมูล Inventory จาก response โดยใช้ Inventory_id เพื่อดึงข้อมูลเต็ม
-    const inventoryId = response.data.donor_id;
-    return this.getById(inventoryId);
-  }
 }
 
 // Export singleton instance
-export const userService = new UserService();
+export const authService = new AuthService();

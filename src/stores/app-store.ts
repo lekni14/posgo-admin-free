@@ -22,7 +22,7 @@ interface AppState {
 }
 
 const defaultConfig: Config = {
-  API_URL: 'http://localhost:4001/api',
+  API_URL: 'https://apiuat.posgo.app/api/v1',
   WS_URL: 'http://localhost:4001',
   OAUTH_API_URL: 'http://localhost:3001',
   APP_PREFIX_KEY: 'win',

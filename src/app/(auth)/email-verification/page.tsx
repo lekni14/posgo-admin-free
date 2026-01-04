@@ -1,9 +1,9 @@
-import EmailVerificationComponent from "@/components/pages/emailverification/emailverification";
+import EmailverificationThreeComponent from "@/components/pages/emailverification/emailverificationThree";
 
-export default function EmailVerification() {
+export default function EmailVerification3() {
   return (
     <>
-      <EmailVerificationComponent />
+      <EmailverificationThreeComponent />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { exampleCategories } from "@/lib/inventory/data";
+
 import { z } from "zod";
 
 // receive Schema

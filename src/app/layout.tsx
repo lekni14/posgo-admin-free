@@ -7,6 +7,7 @@ import "../style/icons/fontawesome/css/fontawesome.min.css";
 import "../style/icons/fontawesome/css/all.min.css";
 import "../style/fonts/feather/css/iconfont.css";
 import BootstrapJs from "../components/bootstrap-js/bootstrapjs";
+import Providers from "../components/providers";
 
 export const metadata = {
   title: "PosGo POS - Inventory Management & Admin Dashboard Template",
@@ -31,7 +32,7 @@ export default function RootLayout({
     <html lang="en" data-layout="detached">
       <body>
         <>
-          <>{children}</>
+         <Providers>{children}</Providers> 
           <BootstrapJs />
         </>
       </body>

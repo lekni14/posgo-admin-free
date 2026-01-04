@@ -9,7 +9,7 @@ export const loginSchema = z.object({
 export type LoginForm = z.infer<typeof loginSchema>;
 
 // Registration Schema
-export const registerSchema = z
+export const RegisterSchema = z
   .object({
     firstName: z.string().min(1, 'กรุณากรอกชื่อ').min(2, 'ชื่อต้องมีอย่างน้อย 2 ตัวอักษร'),
     lastName: z.string().min(1, 'กรุณากรอกนามสกุล').min(2, 'นามสกุลต้องมีอย่างน้อย 2 ตัวอักษร'),
@@ -27,7 +27,7 @@ export const registerSchema = z
     path: ['confirmPassword'],
   });
 
-export type RegisterForm = z.infer<typeof registerSchema>;
+export type RegisterForm = z.infer<typeof RegisterSchema>;
 
 // Password Reset Schema
 export const passwordResetSchema = z.object({
