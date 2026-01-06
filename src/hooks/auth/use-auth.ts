@@ -1,3 +1,4 @@
+import { createSession } from "@/app/lib/session";
 import { authService, LoginCredentials, LoginResponse } from "@/services/auth.service";
 import { useAuthStore } from "@/stores/auth-store";
 import { useMutation, UseMutationOptions, useQueryClient } from "@tanstack/react-query";
@@ -25,11 +26,12 @@ export const  useLogin = (
 
    return useMutation<LoginResponse, Error, LoginCredentials>({
     mutationFn: authService.login,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       // Handle success: store the token/user data, redirect, etc.
       // setAuthToken(data.token); // Example: store the token
       console.log('Login successful:', data);
       // Example: redirect to dashboard
+      await createSession(data);
       // navigate('/dashboard'); 
     },
     onError: (error) => {

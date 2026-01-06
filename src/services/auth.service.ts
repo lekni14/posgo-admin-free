@@ -9,7 +9,7 @@ import { waitForConfig } from "@/stores/app-store";
 // Backend Response Types
 // ========================================
 interface BackendResponse<T> {
-  success: boolean;
+  code: number;
   data?: T;
   message?: string;
   timestamp?: string;
@@ -96,7 +96,7 @@ export interface LoginResponse {
 // ========================================
 // Register Inventory Types
 // ========================================
-export interface RegisterUserData {
+export interface UserData {
   userId: string;
   firstName?: string;
   lastName?: string;
@@ -113,6 +113,7 @@ export interface RegisterUserData {
   postalCode?: string;
   expiresAt: Date;
   [key: string]: any;
+
 }
 
 // Walk-in Registration Payload (matches WalkInRegistrationDto)
@@ -214,30 +215,18 @@ export class AuthService extends BaseService {
   async login(credentials: LoginCredentials): Promise<LoginResponse> {
 
     const config = await waitForConfig();
-    console.log(credentials);
-
-    console.log("search");
     // Call backend API
     // const response = await apiClient.post<
     //   BackendResponse<WalkInRegistrationResult>
     // >("/admin/login", credentials);
-    const response = await axios.post<LoginResponse>(`https://apiuat.posgo.app/api/v1/auth/admin/login`, credentials);
+    const response = await axios.post<BackendResponse<LoginResponse>>(`${config.API_URL}/auth/admin/login`, credentials).then((res)=>res.data)
     console.log(response)
-    // Console log response
-    console.log("🔵 [Inventory API] GET /admin/login", {
-      endpoint: "/inventorys/material?page=1&limit=50",
-      method: "GET",
-      response: response,
-    });
-    if (!response.success || !response.data) {
+    if (response.code!==200 || !response.data) {
       throw new Error(
         response.message || "Failed to register donor via walk-in"
       );
     }
-
-    // ดึงข้อมูล donor จาก response โดยใช้ donor_id เพื่อดึงข้อมูลเต็ม
-    const donorId = response.data.donor_id;
-    return this.getById(donorId);
+    return response.data
   }
 
   async getById(id: string): Promise<User> {
@@ -245,15 +234,7 @@ export class AuthService extends BaseService {
       `/${id}`
     );
 
-    // Console log response
-    console.log("🔵 [Inventory API] GET /donation/Inventorys/:id", {
-      endpoint: `/donation/Inventorys/${id}`,
-      method: "GET",
-      id: id,
-      response: response,
-    });
-
-    if (!response.success || !response.data) {
+    if (response.code!==200 || !response.data) {
       throw new Error("Inventory not found");
     }
 

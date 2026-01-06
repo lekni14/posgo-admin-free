@@ -1,5 +1,5 @@
 import { RegisterSchema, RegisterForm, LoginForm } from "@/lib/schemas/auth";
-import { createSession, deleteSession } from "@/lib/session";
+import { createSession, deleteSession } from "@/app/lib/session";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 

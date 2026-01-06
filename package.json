@@ -69,6 +69,7 @@
     "react-simple-wysiwyg": "^3.4.1",
     "react-slick": "^0.31.0",
     "redux-persist": "^6.0.0",
+    "server-only": "^0.0.1",
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.26.3",
     "sweetalert2-react-content": "^5.1.0",
