@@ -71,6 +71,9 @@ importers:
       clipboard-copy:
         specifier: ^4.0.1
         version: 4.0.1
+      cookies-next:
+        specifier: 4.3.0
+        version: 4.3.0
       dayjs:
         specifier: ^1.11.19
         version: 1.11.19
@@ -1086,6 +1089,9 @@ packages:
     resolution: {integrity: sha512-WRZOuCuaz8UcZZE4R5HXTco2goQSI2XxjGY3hbM/xDvwmqFWd4ivooImsMx65OKM6CtNKbnZ5YL+YwAwK7c1dg==}
     deprecated: This is a stub types definition. bcryptjs provides its own type definitions, so you do not need this installed.
 
+  '@types/cookie@0.6.0':
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+
   '@types/dragula@3.7.5':
     resolution: {integrity: sha512-jojr2JVJB8DawAKXApGnollMvVOMyiMKpchH8gLeoExx35Eq0BQ4WgAiAHoBoEn7h/9eDrIl0yz//cM6ALIJbg==}
 
@@ -1504,9 +1510,16 @@ packages:
   convert-source-map@1.9.0:
     resolution: {integrity: sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A==}
 
+  cookie@0.7.2:
+    resolution: {integrity: sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==}
+    engines: {node: '>= 0.6'}
+
   cookie@1.1.1:
     resolution: {integrity: sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==}
     engines: {node: '>=18'}
+
+  cookies-next@4.3.0:
+    resolution: {integrity: sha512-XxeCwLR30cWwRd94sa9X5lRCDLVujtx73tv+N0doQCFIDl83fuuYdxbu/WQUt9aSV7EJx7bkMvJldjvzuFqr4w==}
 
   copy-to-clipboard@3.3.3:
     resolution: {integrity: sha512-2KV8NhB5JqC3ky0r9PMCAZKbUHSwtEo4CwCs0KXgruG43gX5PMqDEBbVU4OUzw2MuAWUfsuFmWvEKG5QRfSnJA==}
@@ -4323,6 +4336,8 @@ snapshots:
     dependencies:
       bcryptjs: 3.0.3
 
+  '@types/cookie@0.6.0': {}
+
   '@types/dragula@3.7.5': {}
 
   '@types/estree@1.0.8': {}
@@ -4822,7 +4837,14 @@ snapshots:
 
   convert-source-map@1.9.0: {}
 
+  cookie@0.7.2: {}
+
   cookie@1.1.1: {}
+
+  cookies-next@4.3.0:
+    dependencies:
+      '@types/cookie': 0.6.0
+      cookie: 0.7.2
 
   copy-to-clipboard@3.3.3:
     dependencies:

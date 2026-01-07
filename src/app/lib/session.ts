@@ -1,4 +1,4 @@
-import 'use client'
+'use server'
 import { SignJWT, jwtVerify } from "jose";
 // import { RegisterForm } from "@/lib/schemas/auth";
 import { cookies } from "next/headers";
