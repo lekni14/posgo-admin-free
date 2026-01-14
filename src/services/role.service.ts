@@ -1,9 +1,6 @@
 "use client";
 
-import axios from "axios";
-import { apiClient } from "./api-client.service";
 import { BaseService } from "./base.service";
-import { waitForConfig } from "@/stores/app-store";
 
 // ========================================
 // Backend Response Types
@@ -54,72 +51,80 @@ interface WalkInRegistrationResult {
 }
 
 // Backend Donor Entity (snake_case)
-interface BackendUserEntity {
-  username: string;
-  first_name: string;
-  last_name: string;
-  avatar?: string;
+interface BackendRoleEntity {
   id: string;
-  // branchmain: TBranch;
+  role_name: string;
+  role_name_th: string;
+  role_name_en: string;
+  role_name_lo: string;
+  role_access: string[];
+  created_at: string;
+  updated_at: string;
+  site_id: string;
 }
 
 // ========================================
 // Frontend DTOs (camelCase)
 // ========================================
-export interface User {
+export interface Role {
   id: string;
-  username: string;
-  first_name: string;
-  last_name: string;
-  avatar?: string;
-  is_active: boolean;
-  deleted_at: string;
-  created_at: string | Date;
-  updated_at: string;
-  created_id: string;
-  updated_id: string;
-  deleted_id: string;
+  role_name: string;
+  role_name_th: string;
+  role_name_en: string;
+  role_name_lo: string;
 }
 
-export interface LoginCredentials {
-  username: string;
-  password: string;
+export interface RoleSearchParams {
+  keyword?: string;
+  page?: number;
+  limit?: number;
 }
 
-export interface LoginResponse {
-  accessToken: string;
-  expiredAt: string;
-  refreshToken: string;
-  userInfo: User;
+export interface RoleListResponse {
+  data: Role[];
 }
 
 // ========================================
-// Register Inventory Types
+// Register Donor Types
 // ========================================
-export interface UserData {
-  userId: string;
-  firstName?: string;
-  lastName?: string;
-  gender?: string; // UUID
-  phoneNumber?: string;
+export interface RegisterDonorData {
+  donorId?: string;
+  firstName: string;
+  lastName: string;
+  nationalId: string;
+  dateOfBirth: string; // ISO date string
+  age: number;
+  weight: number;
+  height: number;
+  biologicalSex: "female" | "male";
+  gender: string; // UUID
+  phoneNumber: string;
+  emergencyPhoneNumber: string;
   email?: string;
   contactAddressType?: string;
-  addressNumber?: string;
+  addressNumber: string;
   road?: string;
   alley?: string;
-  subDistrict?: string;
-  district?: string;
-  province?: string;
-  postalCode?: string;
-  expiresAt: Date;
-  [key: string]: any;
-
+  subDistrict: string;
+  district: string;
+  province: string;
+  postalCode: string;
+  occupation: string; // UUID
+  occupationOther?: string;
+  bloodType?: string; // UUID
+  donorType: string; // UUID
+  donationType: string; // UUID
+  // Walk-in donation fields
+  locationId?: string; // UUID for donation location
+  registrationSourceId?: string; // UUID for registration source (optional, defaults to WALK_IN)
+  donationDate?: string; // ISO date string (optional)
+  note?: string; // Optional note
 }
 
 // Walk-in Registration Payload (matches WalkInRegistrationDto)
 export interface WalkInRegistrationPayload {
-  InventoryData: {
-    InventoryId?: string;
+  donorData: {
+    donorId?: string;
     firstName: string;
     lastName: string;
     nationalId: string;
@@ -153,7 +158,7 @@ export interface WalkInRegistrationPayload {
       | "other"; // Enum value, not UUID
     occupationOther?: string;
     bloodType?: "unknown" | "A" | "B" | "AB" | "O"; // Enum value, not UUID
-    InventoryType: "first_time" | "regular_over_2_years" | "regular"; // Enum value, not UUID
+    donorType: "first_time" | "regular_over_2_years" | "regular"; // Enum value, not UUID
     donationType: "whole_blood" | "platelets" | "plasma"; // Enum value, not UUID
     consents?: Array<{
       consent_type:
@@ -182,62 +187,60 @@ export interface WalkInRegistrationPayload {
 // Mapper Functions
 // ========================================
 /**
- * แปลง Backend Entity (snake_case) เป็น Frontend Inventory (camelCase)
+ * แปลง Backend Entity (snake_case) เป็น Frontend Donor (camelCase)
  */
-function mapBackendToFrontend(backend: BackendUserEntity): User {
-  return {
-    id: backend.id,
-    username: "",
-    first_name: "",
-    last_name: "",
-    is_active: false,
-    deleted_at: "",
-    created_at: "",
-    updated_at: "",
-    created_id: "",
-    updated_id: "",
-    deleted_id: "",
-  };
-}
 
 // ========================================
-// Inventory Service
+// Donor Service
 // ========================================
-export class AuthService extends BaseService {
+export class RoleService extends BaseService {
   constructor() {
-    super("/auth"); // Backend API endpoint
+    super("/roles"); // Backend API endpoint
   }
 
   /**
-   * Search Inventorys by keyword
-   * Backend: GET /donation/Inventorys/search?keyword=xxx&page=1&limit=10
+   * Search donors by keyword
+   * Backend: GET /donation/donors/search?keyword=xxx&page=1&limit=10
    */
-  async login(credentials: LoginCredentials): Promise<LoginResponse> {
-
-    const config = await waitForConfig();
+  async lists(): Promise<RoleListResponse> {
     // Call backend API
-    const response = await axios.post<BackendResponse<LoginResponse>>(`${config.API_URL}/auth/admin/login`, credentials).then((res)=>res.data)
-    console.log(response)
-    if (response.code!==200 || !response.data) {
-      throw new Error(
-        response.message || "Failed to register donor via walk-in"
-      );
-    }
-    return response.data
-  }
+    const response = await this.get<BackendResponse<BackendRoleEntity[]>>("/");
+    console.log(response);
 
-  async getById(id: string): Promise<User> {
-    const response = await this.get<BackendResponse<BackendUserEntity>>(
-      `/${id}`
-    );
-
-    if (response.code!==200 || !response.data) {
-      throw new Error("Inventory not found");
+    // Transform backend response to frontend format
+    if (response.code !== 200 || !response.data) {
+      return {
+        data: [],
+      };
     }
 
-    return mapBackendToFrontend(response.data);
+    return {
+      data: response.data,
+    };
   }
+
+  /**
+   * Get donor by ID
+   * Backend: GET /donation/donors/:id
+   */
+  // async getById(id: string): Promise<Donor> {
+  //   const response = await this.get<BackendResponse<BackendDonorEntity>>(`/${id}`);
+
+  //   // Console log response
+  //   console.log('🔵 [Donor API] GET /donation/donors/:id', {
+  //     endpoint: `/donation/donors/${id}`,
+  //     method: 'GET',
+  //     id: id,
+  //     response: response,
+  //   });
+
+  //   if (!response.success || !response.data) {
+  //     throw new Error('Donor not found');
+  //   }
+
+  //   return mapBackendToFrontend(response.data);
+  // }
 }
 
 // Export singleton instance
-export const authService = new AuthService();
+export const roleService = new RoleService();

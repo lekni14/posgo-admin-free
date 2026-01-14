@@ -23,7 +23,7 @@ export default function Signin() {
   const { mutate: login, isError, error } = useLogin();
 
   const onSubmit = async (data: LoginForm) => {
-    try {      
+    try {
       console.log(data);
       login(data);
       //   await login.mutateAsync({
@@ -143,58 +143,6 @@ export default function Signin() {
                           >
                             Sign In
                           </button>
-                        </div>
-                        <div className="signinform">
-                          <h4>
-                            New on our platform?
-                            <Link href={"register"} className="hover-a">
-                              {" "}
-                              Create an account
-                            </Link>
-                          </h4>
-                        </div>
-                        <div className="form-setlogin or-text">
-                          <h4>OR</h4>
-                        </div>
-                        <div className="mt-2">
-                          <div className="d-flex align-items-center justify-content-center flex-wrap">
-                            <div className="text-center me-2 flex-fill">
-                              <Link
-                                href="#"
-                                className="br-10 p-2 btn btn-info d-flex align-items-center justify-content-center"
-                              >
-                                <img
-                                  className="img-fluid m-1"
-                                  src="assets/img/icons/facebook-logo.svg"
-                                  alt="Facebook"
-                                />
-                              </Link>
-                            </div>
-                            <div className="text-center me-2 flex-fill">
-                              <Link
-                                href="#"
-                                className="btn btn-white br-10 p-2  border d-flex align-items-center justify-content-center"
-                              >
-                                <img
-                                  className="img-fluid m-1"
-                                  src="assets/img/icons/google-logo.svg"
-                                  alt="Facebook"
-                                />
-                              </Link>
-                            </div>
-                            <div className="text-center flex-fill">
-                              <Link
-                                href="#"
-                                className="bg-dark br-10 p-2 btn btn-dark d-flex align-items-center justify-content-center"
-                              >
-                                <img
-                                  className="img-fluid m-1"
-                                  src="assets/img/icons/apple-logo.svg"
-                                  alt="Apple"
-                                />
-                              </Link>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     </div>

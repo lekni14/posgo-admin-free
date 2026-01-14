@@ -36,6 +36,7 @@ export function useSearchUsers(params: UserSearchParams, enabled = true) {
    return useQuery<UserSearchResponse>({
     queryKey: userKeys.search(params), // Unique key for caching
     queryFn: async () => userService.search(params), // Function that fetches the data
+    // enabled: enabled && !!params.keyword && params.keyword.trim().length > 0,
   });
   // return useQuery<UserSearchResponse>({
   //   queryKey: userKeys.search(params),

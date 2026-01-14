@@ -1,4 +1,4 @@
-'use server'
+"use server";
 import { SignJWT, jwtVerify } from "jose";
 // import { RegisterForm } from "@/lib/schemas/auth";
 import { cookies } from "next/headers";
@@ -27,12 +27,12 @@ export async function decrypt(session: string | undefined = "") {
   }
 }
 export async function createSession(param: LoginResponse) {
+  console.log(param)
   // const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   const expiresAt = new Date(param.expiredAt);
   const userId = param.userInfo.id;
   const session = await encrypt({ userId, expiresAt });
   const cookieStore = await cookies();
-
   cookieStore.set("session", session, {
     httpOnly: true,
     secure: true,
@@ -40,6 +40,8 @@ export async function createSession(param: LoginResponse) {
     sameSite: "lax",
     path: "/",
   });
+  cookieStore.set("accessToken", param.accessToken);
+  cookieStore.set("refreshToken", param.accessToken);
 }
 export async function updateSession() {
   const session = (await cookies()).get("session")?.value;

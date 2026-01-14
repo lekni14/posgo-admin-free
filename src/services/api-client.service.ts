@@ -1,6 +1,8 @@
 import { waitForConfig } from '@/stores/app-store';
 import { STORAGE_KEYS, OAUTH_TOKEN_KEYS } from '@/lib/constants/storage';
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
+import { cookies } from 'next/headers';
+import { verifySession } from '@/app/lib/dal';
 // import { toast } from 'sonner';
 
 // ✅ Constants
@@ -84,11 +86,13 @@ class ApiClientService {
    */
   private setupRequestInterceptor(client: AxiosInstance): void {
     client.interceptors.request.use(
-      (config) => {
+      async (config) => {
         // Use OAuth token
-        const token = localStorage.getItem(STORAGE_KEYS.OAUTH_ACCESS_TOKEN);
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
+        const token = await verifySession()
+        console.log(token)
+        // const token = localStorage.getItem(STORAGE_KEYS.OAUTH_ACCESS_TOKEN);
+        if (token.token) {
+          config.headers.Authorization = `Bearer ${token.token}`;
         }
 
         // ✅ ลบ Content-Type header เมื่อส่ง FormData

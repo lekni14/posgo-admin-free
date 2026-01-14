@@ -3,45 +3,52 @@
 import CollapesIcon from "@/core/common/tooltip-content/collapes";
 import RefreshIcon from "@/core/common/tooltip-content/refresh";
 import TooltipIcons from "@/core/common/tooltip-content/tooltipIcons";
-import AddUsers from "@/core/modals/usermanagement/addusers";
+import AddUsers from "@/core/_modals/usermanagement/addusers";
 import EditUser from "@/core/modals/usermanagement/edituser";
 import Link from "next/link";
-
+import { IconUser } from "@tabler/icons-react";
 import Table from "@/core/common/pagination/datatable";
 import { userlisadata } from "@/core/json/users";
 import { useSearchUsers } from "@/hooks/use-user";
 import { useState } from "react";
+import { User } from "react-feather";
 
 export default function Users() {
+  const [isCreateOpen, setIsCreateOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [pageSize, setPageSize] = useState(20);
 
   // เรียก API เมื่อมี search query
   const {
     data: searchResult,
     isLoading,
     error,
-  } = useSearchUsers(
-    {
-      keyword: '',
-      page: 1,
-      limit: 50, // เพิ่ม limit เพื่อให้แสดงผลได้มากขึ้น
-    },
-  );
-  console.log(searchResult)
-  const dataSource = userlisadata;
-
+  } = useSearchUsers({
+    keyword: "",
+    page: 1,
+    limit: pageSize, // เพิ่ม limit เพื่อให้แสดงผลได้มากขึ้น
+  });
   const columns = [
     {
       title: "User Name",
       dataIndex: "username",
+      className: "py-1 px-2",
       render: (text: any, record: any) => (
         <span className="userimgname">
           <Link href="#" className="avatar avatar-md me-2">
-            <img alt="" src={record.img} />
+            <>
+              {record.img ? (
+                <img alt="" src={record.img} />
+              ) : (
+                <div className="px-1 py-1.5 bg-body-secondary text-center rounded">
+                  <IconUser />
+                </div>
+              )}
+            </>
           </Link>
           <div>
-            <Link href="#">{text}</Link>
+            <Link href="#">{record.first_name + " " + record.last_name}</Link>
+            <p>{text}</p>
           </div>
         </span>
       ),
@@ -49,8 +56,8 @@ export default function Users() {
     },
 
     {
-      title: "Phone",
-      dataIndex: "phone",
+      title: "Mobile",
+      dataIndex: "mobile",
       sorter: (a: any, b: any) => a.phone.length - b.phone.length,
     },
     {
@@ -59,32 +66,37 @@ export default function Users() {
       sorter: (a: any, b: any) => a.email.length - b.email.length,
     },
     {
-      title: "Role",
-      dataIndex: "role",
+      title: "role_name",
+      dataIndex: "role_name",
+      render: (text: any, record: any) => (
+        <div>
+          <Link href="#">{text.role_name}</Link>
+        </div>
+      ),
       sorter: (a: any, b: any) => a.role.length - b.role.length,
     },
     {
       title: "Created On",
-      dataIndex: "createdon",
+      dataIndex: "created_at",
       sorter: (a: any, b: any) => a.createdon.length - b.createdon.length,
     },
     {
       title: "Status",
-      dataIndex: "status",
-      render: (text: any) => (
+      dataIndex: "active",
+      render: (text: boolean) => (
         <div>
-          {text === "Active" && (
+          {text === true && (
             <span className="d-inline-flex align-items-center p-1 pe-2 rounded-1 text-white bg-success fs-10">
               {" "}
               <i className="ti ti-point-filled me-1 fs-11"></i>
-              {text}
+              Active
             </span>
           )}
-          {text === "Inactive" && (
+          {text === false && (
             <span className="d-inline-flex align-items-center p-1 pe-2 rounded-1 text-white bg-danger fs-10">
               {" "}
               <i className="ti ti-point-filled me-1 fs-11"></i>
-              {text}
+              Inactive
             </span>
           )}
         </div>
@@ -145,8 +157,12 @@ export default function Users() {
               <Link
                 href="#"
                 className="btn btn-added"
-                data-bs-toggle="modal"
-                data-bs-target="#add-units"
+                // data-bs-toggle="modal"
+                // data-bs-target="#add-units"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsCreateOpen(true);
+                }}
               >
                 <i className="ti ti-circle-plus me-1"></i>
                 Add New User
@@ -184,16 +200,18 @@ export default function Users() {
 
             <div className="card-body">
               <div className="table-responsive">
-                <Table columns={columns} dataSource={dataSource} />
+                {searchResult ? (
+                  <Table columns={columns} dataSource={searchResult?.data} PageSize={pageSize} />
+                ) : null} 
               </div>
             </div>
           </div>
           {/* /product list */}
         </div>
       </div>
-      <AddUsers />
-      <EditUser />
-      <div className="modal fade" id="delete-modal">
+      <AddUsers open={isCreateOpen} setOpen={setIsCreateOpen}  />
+      {/* <EditUser /> */}
+      {/* <div className="modal fade" id="delete-modal">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="page-wrapper-new p-0">
@@ -224,7 +242,7 @@ export default function Users() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

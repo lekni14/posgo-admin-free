@@ -6,25 +6,32 @@ import { BaseService } from "./base.service";
 // Backend Response Types
 // ========================================
 interface BackendResponse<T> {
-  success: boolean;
+  code: number;
   data?: T;
   message?: string;
   timestamp?: string;
 }
 
 interface BackendPaginatedResponse<T> {
-  success: boolean;
-  data?: T[];
-  pagination?: {
-    page: number;
-    limit: number;
-    total: number;
-    total_pages: number;
-    has_next: boolean;
-    has_prev: boolean;
-    start_index: number;
-    end_index: number;
+  code: number;
+  data?: {
+    Data: T[];
+    Pagination: {
+      TotalRows: number;
+      TotalPages: number;
+      Rows: number | null;
+    };
   };
+  // pagination?: {
+  //   page: number;
+  //   limit: number;
+  //   total: number;
+  //   total_pages: number;
+  //   has_next: boolean;
+  //   has_prev: boolean;
+  //   start_index: number;
+  //   end_index: number;
+  // };
   message?: string;
   timestamp?: string;
 }
@@ -52,12 +59,31 @@ interface WalkInRegistrationResult {
 
 // Backend Donor Entity (snake_case)
 interface BackendUserEntity {
-  username: string;
+  id: string;
   first_name: string;
   last_name: string;
-  avatar?: string;
-  id: string;
-  // branchmain: TBranch;
+  email: string;
+  username: string;
+  role: string;
+  active: boolean;
+  mobile: string;
+  site_id: string;
+  pin: string;
+  avatar: string;
+  created_at: string;
+  updated_at: string;
+  userrole: null;
+  role_name: {
+    id: string;
+    role_name: string;
+    role_name_th: string;
+    role_name_en: string;
+    role_name_lo: string;
+    role_access: [];
+    created_at: string;
+    updated_at: string;
+    site_id: string;
+  };
 }
 
 // ========================================
@@ -65,17 +91,30 @@ interface BackendUserEntity {
 // ========================================
 export interface User {
   id: string;
-  username: string;
   first_name: string;
   last_name: string;
-  avatar?: string;
-  is_active: boolean;
-  deleted_at: string;
-  created_at: string | Date;
+  email: string;
+  username: string;
+  role: string;
+  active: boolean;
+  mobile: string;
+  site_id: string;
+  pin: string;
+  avatar: string;
+  created_at: string;
   updated_at: string;
-  created_id: string;
-  updated_id: string;
-  deleted_id: string;
+  userrole: null;
+  role_name: {
+    id: string;
+    role_name: string;
+    role_name_th: string;
+    role_name_en: string;
+    role_name_lo: string;
+    role_access: [];
+    created_at: string;
+    updated_at: string;
+    site_id: string;
+  };
 }
 
 export interface UserSearchParams {
@@ -185,17 +224,31 @@ export interface WalkInRegistrationPayload {
  */
 function mapBackendToFrontend(backend: BackendUserEntity): User {
   return {
-    id: backend.id,
-    username: "",
+    id: "",
     first_name: "",
     last_name: "",
-    is_active: false,
-    deleted_at: "",
+    email: "",
+    username: "",
+    role: "",
+    active: false,
+    mobile: "",
+    site_id: "",
+    pin: "",
+    avatar: "",
     created_at: "",
     updated_at: "",
-    created_id: "",
-    updated_id: "",
-    deleted_id: "",
+    userrole: null,
+    role_name: {
+      id: "",
+      role_name: "",
+      role_name_th: "",
+      role_name_en: "",
+      role_name_lo: "",
+      role_access: [],
+      created_at: "",
+      updated_at: "",
+      site_id: "",
+    },
   };
 }
 
@@ -240,7 +293,7 @@ export class UserService extends BaseService {
     });
 
     // Transform backend response to frontend format
-    if (!response.success || !response.data || !response.pagination) {
+    if (response.code !== 200 || !response.data) {
       return {
         data: [],
         total: 0,
@@ -250,15 +303,22 @@ export class UserService extends BaseService {
         hasPrev: false,
       };
     }
-
     return {
-      data: response.data.map(mapBackendToFrontend),
-      total: response.pagination.total,
-      page: response.pagination.page,
-      limit: response.pagination.limit,
-      hasNext: response.pagination.has_next,
-      hasPrev: response.pagination.has_prev,
+      data: response.data.Data,
+      total: response.data.Pagination.TotalPages,
+      page: params.page || 1,
+      limit: params.limit || 10,
+      hasNext: false,
+      hasPrev: false,
     };
+    // return {
+    //   data: response.data.map(mapBackendToFrontend),
+    //   total: response.pagination.total,response.data.Pagination.TotalPages
+    //   page: response.pagination.page,
+    //   limit: response.pagination.limit,
+    //   hasNext: response.pagination.has_next,
+    //   hasPrev: response.pagination.has_prev,
+    // };
   }
 
   /**
@@ -278,7 +338,7 @@ export class UserService extends BaseService {
       response: response,
     });
 
-    if (!response.success || !response.data) {
+    if (response.code !== 200 || !response.data) {
       throw new Error("Inventory not found");
     }
 
@@ -309,7 +369,7 @@ export class UserService extends BaseService {
       response: response,
     });
 
-    if (!response.success || !response.data) {
+    if (response.code !== 200 || !response.data) {
       throw new Error(
         response.message || "Failed to register Inventory via walk-in"
       );

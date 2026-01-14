@@ -41,7 +41,8 @@ export const useLogin = (
       // Example: redirect to dashboard
       await createSession(data);
       queryClient.setQueryData(['user'], data);
-      redirect('/dashboard')
+      window.location.href = "/dashboard"
+      // redirect('/dashboard')
 
     },
     onError: (error) => {
