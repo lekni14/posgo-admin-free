@@ -187,119 +187,8 @@ export default function Header() {
                 </Link>
               </div>
             </li> */}
-            {/* /Select Store */}
-
-            <li className="nav-item dropdown link-nav">
-              <Link
-                href="#"
-                className="btn btn-primary btn-md d-inline-flex align-items-center"
-                data-bs-toggle="dropdown"
-              >
-                <i className="ti ti-circle-plus me-1" />
-                Add New
-              </Link>
-              <div className="dropdown-menu dropdown-xl dropdown-menu-center">
-                <div className="row g-2">
-                  <div className="col-md-2">
-                    <Link href={route.categorylist} className="link-item">
-                      <span className="link-icon">
-                        <i className="ti ti-brand-codepen" />
-                      </span>
-                      <p>Category</p>
-                    </Link>
-                  </div>
-                  <div className="col-md-2">
-                    <Link href={route.addproduct} className="link-item">
-                      <span className="link-icon">
-                        <i className="ti ti-square-plus" />
-                      </span>
-                      <p>Product</p>
-                    </Link>
-                  </div>
-                  <div className="col-md-2">
-                    <Link href={route.categorylist} className="link-item">
-                      <span className="link-icon">
-                        <i className="ti ti-shopping-bag" />
-                      </span>
-                      <p>Purchase</p>
-                    </Link>
-                  </div>
-                  <div className="col-md-2">
-                    <Link href="{route.online}" className="link-item">
-                      <span className="link-icon">
-                        <i className="ti ti-shopping-cart" />
-                      </span>
-                      <p>Sale</p>
-                    </Link>
-                  </div>
-                  <div className="col-md-2">
-                    <Link href={route.expenselist} className="link-item">
-                      <span className="link-icon">
-                        <i className="ti ti-file-text" />
-                      </span>
-                      <p>Expense</p>
-                    </Link>
-                  </div>
-                  <div className="col-md-2">
-                    <Link href={route.quotationlist} className="link-item">
-                      <span className="link-icon">
-                        <i className="ti ti-device-floppy" />
-                      </span>
-                      <p>Quotation</p>
-                    </Link>
-                  </div>
-                  <div className="col-md-2">
-                    <Link href={route.salesreturn} className="link-item">
-                      <span className="link-icon">
-                        <i className="ti ti-copy" />
-                      </span>
-                      <p>Return</p>
-                    </Link>
-                  </div>
-                  <div className="col-md-2">
-                    <Link href={route.users} className="link-item">
-                      <span className="link-icon">
-                        <i className="ti ti-user" />
-                      </span>
-                      <p>User</p>
-                    </Link>
-                  </div>
-                  <div className="col-md-2">
-                    <Link href={route.customer} className="link-item">
-                      <span className="link-icon">
-                        <i className="ti ti-users" />
-                      </span>
-                      <p>Customer</p>
-                    </Link>
-                  </div>
-                  <div className="col-md-2">
-                    <Link href={route.salesreport} className="link-item">
-                      <span className="link-icon">
-                        <i className="ti ti-shield" />
-                      </span>
-                      <p>Biller</p>
-                    </Link>
-                  </div>
-                  <div className="col-md-2">
-                    <Link href={route.suppliers} className="link-item">
-                      <span className="link-icon">
-                        <i className="ti ti-user-check" />
-                      </span>
-                      <p>Supplier</p>
-                    </Link>
-                  </div>
-                  <div className="col-md-2">
-                    <Link href={route.stocktransfer} className="link-item">
-                      <span className="link-icon">
-                        <i className="ti ti-truck" />
-                      </span>
-                      <p>Transfer</p>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li className="nav-item pos-nav">
+            {/* /Select Store */}            
+            {/* <li className="nav-item pos-nav">
               <Link
                 href={route.pos}
                 className="btn btn-dark btn-md d-inline-flex align-items-center"
@@ -307,7 +196,7 @@ export default function Header() {
                 <i className="ti ti-device-laptop me-1" />
                 POS
               </Link>
-            </li>
+            </li> */}
 
             {/* Flag */}
             <li className="nav-item dropdown has-arrow flag-nav nav-item-box">
@@ -510,14 +399,14 @@ export default function Header() {
                   <i className="ti ti-user-circle me-2" />
                   MyProfile
                 </Link>
-                <Link className="dropdown-item" href={route.salesreport}>
+                {/* <Link className="dropdown-item" href={route.salesreport}>
                   <i className="ti ti-file-text me-2" />
                   Reports
                 </Link>
                 <Link className="dropdown-item" href={route.generalsettings}>
                   <i className="ti ti-settings-2 me-2" />
                   Settings
-                </Link>
+                </Link> */}
                 <hr className="my-2" />
                 <Link className="dropdown-item logout pb-0" href={route.signin}>
                   <i className="ti ti-logout me-2" />

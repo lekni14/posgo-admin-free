@@ -284,14 +284,6 @@ export class UserService extends BaseService {
       params: queryParams,
     });
 
-    // Console log response
-    console.log("🔵 [Inventory API] GET /inventorys/material", {
-      endpoint: "/inventorys/material?page=1&limit=50",
-      method: "GET",
-      params: queryParams,
-      response: response,
-    });
-
     // Transform backend response to frontend format
     if (response.code !== 200 || !response.data) {
       return {

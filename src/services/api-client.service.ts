@@ -89,7 +89,6 @@ class ApiClientService {
       async (config) => {
         // Use OAuth token
         const token = await verifySession()
-        console.log(token)
         // const token = localStorage.getItem(STORAGE_KEYS.OAUTH_ACCESS_TOKEN);
         if (token.token) {
           config.headers.Authorization = `Bearer ${token.token}`;

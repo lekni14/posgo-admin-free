@@ -6,24 +6,30 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { Modal } from "antd";
-import { Button } from "react-bootstrap";
+import { IconX } from "@tabler/icons-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { createUserForm, createUserSchema } from "@/lib/schemas/user";
 import { useListRoles } from "@/hooks/use-role";
+import { useDropzone } from "react-dropzone";
+import ProfilePicUpload from "@/core/common/profilepicupload";
 
 interface ModalProp {
   open: boolean;
   setOpen: (arg: boolean) => void;
 }
+interface EncodedFile {
+  name: string;
+  size: number;
+  encoded: string; // base64 encoded content
+  progress: number;
+}
+
 const AddUsers = ({ open, setOpen }: ModalProp) => {
-  const { data, isLoading, isError, error } = useListRoles();
-  const status = [
-    { value: "Choose", label: "Choose" },
-    { value: "Manager", label: "Manager" },
-    { value: "Admin", label: "Admin" },
-  ];
-  console.log(data)
+  const { data: RoleListResponse, isLoading, isError, error } = useListRoles();
+  const [encodedFiles, setEncodedFiles] = useState<EncodedFile[]>([]);
+  const [selectedCover, setSelectedCover] = useState<number>(0);
+
   const [roleList, setRoleList] = useState<any>();
   // useEffect(() => {
   //   const fetchUnitData = async () => {
@@ -99,13 +105,48 @@ const AddUsers = ({ open, setOpen }: ModalProp) => {
           <div className="col-lg-12">
             <div className="new-employee-field">
               <span>Avatar</span>
-              <div className="profile-pic-upload mb-2">
-                <div className="profile-pic">
-                  <span>
-                    <PlusCircle className="plus-down-add" />
-                    Profile Photo
-                  </span>
-                </div>
+              <ProfilePicUpload
+                setEncodedFiles={setEncodedFiles}
+                encodedFiles={encodedFiles}
+                selectedCover={0}
+                isValidation={false}
+                setSelectedCover={setSelectedCover}
+              />
+              {/* <div className="profile-pic-upload mb-2">
+                {encodedFiles && encodedFiles.length > 0 ? (
+                  encodedFiles?.map((v, key: number) => (
+                    <div
+                      className="phone-img"
+                      style={{
+                        border:
+                          selectedCover === key
+                            ? "2px solid #FF9F43"
+                            : "1px solid rgba(145, 158, 171, 0.3)",
+                      }}
+                      key={key}
+                      onClick={() => setSelectedCover(key)}
+                    >
+                      <img src={v.encoded} alt="image" />
+                      <Link
+                        href="#"
+                        // onClick={() => handleRemoveProduct(key)}
+                      >
+                        <IconX />
+                      </Link>
+                    </div>
+                  ))
+                ) : (
+                  <div
+                    className="profile-pic text-center cursor-pointer"
+                    {...getRootProps()}
+                  >
+                    <input {...getInputProps()} className="hidden" />
+                    <span>
+                      <PlusCircle className="plus-down-add" />
+                      Profile Photo
+                    </span>
+                  </div>
+                )}
                 <div className="input-blocks mb-0">
                   <div className="image-upload mb-0">
                     <input type="file" />
@@ -114,7 +155,7 @@ const AddUsers = ({ open, setOpen }: ModalProp) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="col-lg-6">
@@ -164,8 +205,8 @@ const AddUsers = ({ open, setOpen }: ModalProp) => {
                 classNamePrefix="react-select"
                 // {...register("role")}
                 options={
-                  roleList
-                    ? roleList?.map((v: any) => {
+                  RoleListResponse
+                    ? RoleListResponse.data?.map((v: any) => {
                         return {
                           id: v.id,
                           value: v.id,

@@ -46,6 +46,7 @@ export const SidebarData = [
         icon: "chart-infographic",
         submenu: false,
         showSubRoute: false,
+        link: "/salesreport",
       },
     ]
   },

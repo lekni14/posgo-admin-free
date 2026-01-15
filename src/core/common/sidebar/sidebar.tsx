@@ -71,13 +71,13 @@ export default function Sidebar() {
         <>
           {/* Logo */}
           <div className="sidebar-logo">
-            <Link href={route.newdashboard} className="logo logo-normal">
+            <Link href={route.dashboard} className="logo logo-normal">
               <img src="assets/img/logo.svg" alt="Img" />
             </Link>
-            <Link href={route.newdashboard} className="logo logo-white">
+            <Link href={route.dashboard} className="logo logo-white">
               <img src="assets/img/logo-white.svg" alt="Img" />
             </Link>
-            <Link href={route.newdashboard} className="logo-small">
+            <Link href={route.dashboard} className="logo-small">
               <img src="assets/img/logo-small.png" alt="Img" />
             </Link>
             <Link id="toggle_btn" href="#" onClick={handlesidebar}>
@@ -108,16 +108,7 @@ export default function Sidebar() {
                     Menu
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link border-0" href={route.chat}>
-                    Chats
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link border-0" href={route.email}>
-                    Inbox
-                  </Link>
-                </li>
+                
               </ul>
             </div>
           </div>

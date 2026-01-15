@@ -1,26 +1,34 @@
-'use client'
+"use client";
 import CollapesIcon from "@/core/common/tooltip-content/collapes";
 import RefreshIcon from "@/core/common/tooltip-content/refresh";
 import TooltipIcons from "@/core/common/tooltip-content/tooltipIcons";
 import { rolesandpermission } from "@/core/json/rolesandpermissiondata";
 import { all_routes } from "@/data/all_routes";
 
-import  Table  from "@/core/common/pagination/datatable";
+import Table from "@/core/common/pagination/datatable";
 import Link from "next/link";
 import { PlusCircle } from "react-feather";
+import { useListRoles } from "@/hooks/use-role";
 
 export default function RolesPermissions() {
   const route = all_routes;
+  const { data: roleList, isLoading, isError, error } = useListRoles();
+  console.log(roleList);
   const dataSource = rolesandpermission;
   const columns = [
     {
       title: "Role Name",
-      dataIndex: "rolename",
-      sorter: (a: any, b: any) => a.rolename.length - b.rolename.length,
+      dataIndex: "role_name_th",
+      sorter: (a: any, b: any) => a.role_name_th.length - b.role_name_th.length,
     },
     {
-      title: "Created On",
-      dataIndex: "createdon",
+      title: "Role Name En",
+      dataIndex: "role_name_en",
+      sorter: (a: any, b: any) => a.role_name_en.length - b.role_name_en.length,
+    },
+    {
+      title: "Created At",
+      dataIndex: "created_at",
       sorter: (a: any, b: any) => a.createdon.length - b.createdon.length,
     },
     {
@@ -117,15 +125,17 @@ export default function RolesPermissions() {
 
             <div className="card-body">
               <div className="table-responsive">
-                <Table columns={columns} dataSource={dataSource} />
+                {roleList ? (
+                  <Table columns={columns} dataSource={roleList?.data} isLoading={isLoading} />
+                ) : null}
               </div>
             </div>
           </div>
           {/* /product list */}
         </div>
       </div>
-      {/* <AddRole />
-      <EditRole /> */}
+       {/* <AddRole /> */}
+      {/*<EditRole /> */}
       <>
         {/* Delete Product */}
         <div className="modal fade modal-default" id="delete_modal">

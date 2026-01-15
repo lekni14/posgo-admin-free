@@ -13,17 +13,14 @@ interface BackendResponse<T> {
 }
 
 interface BackendPaginatedResponse<T> {
-  success: boolean;
-  data?: T[];
-  pagination?: {
-    page: number;
-    limit: number;
-    total: number;
-    total_pages: number;
-    has_next: boolean;
-    has_prev: boolean;
-    start_index: number;
-    end_index: number;
+  code: number;
+  data?: {
+    Data: T[];
+    Pagination: {
+      TotalRows: number;
+      TotalPages: number;
+      Rows: number | null;
+    };
   };
   message?: string;
   timestamp?: string;
@@ -80,9 +77,20 @@ export interface RoleSearchParams {
   limit?: number;
 }
 
+export interface RoleSearchResponse {
+  data: Role[];
+  total: number;
+  page: number;
+  limit: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+}
+
+
 export interface RoleListResponse {
   data: Role[];
 }
+
 
 // ========================================
 // Register Donor Types
@@ -121,67 +129,7 @@ export interface RegisterDonorData {
   note?: string; // Optional note
 }
 
-// Walk-in Registration Payload (matches WalkInRegistrationDto)
-export interface WalkInRegistrationPayload {
-  donorData: {
-    donorId?: string;
-    firstName: string;
-    lastName: string;
-    nationalId: string;
-    dateOfBirth: Date;
-    age: number;
-    weight: number;
-    height: number;
-    biologicalSex: "female" | "male";
-    gender: "woman" | "man" | "transwoman" | "transman"; // Enum value, not UUID
-    phoneNumber: string;
-    emergencyPhoneNumber: string;
-    email?: string;
-    addressNumber: string;
-    road?: string;
-    alley?: string;
-    subDistrict: string;
-    district: string;
-    province: string;
-    postalCode: string;
-    tambolId?: string; // UUID for tambol (FK)
-    amphoeId?: string; // UUID for amphoe (FK)
-    provinceId?: string; // UUID for province (FK)
-    contactAddressType?: string;
-    occupation:
-      | "student"
-      | "government_military"
-      | "employee"
-      | "monk"
-      | "farmer"
-      | "business"
-      | "other"; // Enum value, not UUID
-    occupationOther?: string;
-    bloodType?: "unknown" | "A" | "B" | "AB" | "O"; // Enum value, not UUID
-    donorType: "first_time" | "regular_over_2_years" | "regular"; // Enum value, not UUID
-    donationType: "whole_blood" | "platelets" | "plasma"; // Enum value, not UUID
-    consents?: Array<{
-      consent_type:
-        | "data_usage"
-        | "marketing"
-        | "donation_procedure"
-        | "research";
-      is_consented: boolean;
-      consent_version?: string;
-      signature_image_url?: string;
-      ip_address?: string;
-      witnessed_by_staff_id?: string;
-      note?: string;
-    }>;
-  };
-  donation: {
-    location_id: string; // UUID (required)
-    donation_type_id: string; // UUID (required) - this is UUID, not enum
-    registration_source_id?: string; // UUID (optional)
-    donation_datetime?: Date; // Optional
-    note?: string; // Optional
-  };
-}
+
 
 // ========================================
 // Mapper Functions
@@ -219,6 +167,47 @@ export class RoleService extends BaseService {
     };
   }
 
+   /**
+   * Search Role by keyword
+   * Backend: GET /donation/Inventorys/search?keyword=xxx&page=1&limit=10
+   */
+  async search(params: RoleSearchParams): Promise<RoleSearchResponse> {
+    const queryParams: Record<string, any> = {};
+    if (params.keyword) {
+      queryParams.keyword = params.keyword.trim();
+    }
+    if (params.page) {
+      queryParams.page = params.page;
+    }
+    if (params.limit) {
+      queryParams.limit = params.limit;
+    }
+    console.log("search");
+    // Call backend API
+    const response = await this.get<
+      BackendPaginatedResponse<BackendRoleEntity>
+    >(`/getlistfilter`, {
+      params: queryParams,
+    });
+    if (response.code !== 200 || !response.data) {
+      return {
+        data: [],
+        total: 0,
+        page: params.page || 1,
+        limit: params.limit || 10,
+        hasNext: false,
+        hasPrev: false,
+      };
+    }
+    return {
+      data: response.data.Data,
+      total: response.data.Pagination.TotalPages,
+      page: params.page || 1,
+      limit: params.limit || 10,
+      hasNext: false,
+      hasPrev: false,
+    }; 
+  }
   /**
    * Get donor by ID
    * Backend: GET /donation/donors/:id
