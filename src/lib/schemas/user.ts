@@ -5,7 +5,8 @@ export const createUserSchema = z.object({
   username: z
     .string()
     .min(1, "กรุณากรอกชื่อผู้ใช้")
-    .min(3, "ต้องมีอย่างน้อย 3 ตัวอักษร"),
+    .min(3, "ต้องมีอย่างน้อย 3 ตัวอักษร")
+    ,
   first_name: z
     .string()
     .min(1, "กรุณากรอกชื่อ")

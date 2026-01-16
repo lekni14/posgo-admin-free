@@ -177,7 +177,7 @@ class ApiClientService {
 
     // Redirect to login immediately
     console.log('🚀 Redirecting to login page from:', window.location.pathname);
-    window.location.href = '/login';
+    window.location.href = '/signin';
   }
 
   /**

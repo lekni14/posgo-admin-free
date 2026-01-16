@@ -8,7 +8,6 @@ import EditUser from "@/core/modals/usermanagement/edituser";
 import Link from "next/link";
 import { IconUser } from "@tabler/icons-react";
 import Table from "@/core/common/pagination/datatable";
-import { userlisadata } from "@/core/json/users";
 import { useSearchUsers } from "@/hooks/use-user";
 import { useState } from "react";
 import { User } from "react-feather";

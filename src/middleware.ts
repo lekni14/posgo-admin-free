@@ -4,16 +4,15 @@ import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import { decrypt } from "@/app/lib/session";
 
-// const publicRoutes = ["/login", "/privacy-policy","/regismember","/verifyotpemail"];
-
-const protectedRoutes = ["/dashboard"];
 const publicRoutes = ["/signin", "/signup"];
+import { all_routes } from "@/data/all_routes";
+const router = Object.values(all_routes).filter(item => !publicRoutes.includes(item));
+const protectedRoutes = router;
+
 
 export default async function middleware(request: NextRequest) {
-  // const token = request.cookies.get("Tokens")?.value;
-  // const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname);
-
-  // console.log(request.nextUrl.pathname);
+  const router = Object.values(all_routes).filter(item => !publicRoutes.includes(item));
+  console.log("Middleware running for request:", router);
   // if (!request.nextUrl.pathname.startsWith("/upload")) {
   //   if (!isPublicRoute && (!token || Date.now() > JSON.parse(token).expiredAt)) {
   //     return NextResponse.redirect(new URL("/login", request.nextUrl));

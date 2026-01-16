@@ -1,4 +1,4 @@
-import { IconX } from "@tabler/icons-react";
+import { IconCloudUp, IconPencil, IconUser, IconX } from "@tabler/icons-react";
 import Link from "next/link";
 import { useDropzone } from "react-dropzone";
 import { PlusCircle } from "react-feather";
@@ -30,6 +30,9 @@ const ProfilePicUpload = ({
   setSelectedCover,
   setEncodedFiles,
 }: dataProps) => {
+  const handleRemoveProduct = (key: number) => {
+    setEncodedFiles(encodedFiles.filter((_, i) => i !== key));
+  };
   const handleImage = useCallback((file: File, body: string) => {
     return resizeImage(file, body)
       .then((blob: any) => convertBlobToBinaryString(blob))
@@ -73,7 +76,7 @@ const ProfilePicUpload = ({
         const a = await readFile(acceptedFiles[index]);
         encFile.push(a);
       }
-      setEncodedFiles([...encodedFiles, ...encFile]);
+      setEncodedFiles([...encFile]);
     },
     [encodedFiles, readFile, setEncodedFiles]
   );
@@ -86,11 +89,64 @@ const ProfilePicUpload = ({
       onDrop(acceptedFiles);
     },
     // maxFiles: maxFiles,
-    multiple: false,
+    multiple: true,
   });
   return (
     <>
-      <div className="profile-pic-upload mb-2">
+      <div
+        className="d-flex flex-row gap-2 align-items-end"
+        // {...getRootProps()}
+      >
+        {encodedFiles && encodedFiles.length > 0 ? (
+          encodedFiles?.map((v, key: number) => (
+            <div
+              className="position-relative overflow-hidden rounded-2"
+              style={{
+                border:
+                  selectedCover === key
+                    ? "2px solid #FF9F43"
+                    : "1px solid rgba(145, 158, 171, 0.3)",
+                width: "80px",
+                height: "80px",
+              }}
+              key={key}
+              onClick={() => setSelectedCover(key)}
+            >
+              <img src={v.encoded} alt="image" className="object-fit-cover h-100 rounded-1" />
+              {/* <Link
+                href="#"
+                className="position-absolute top-0 end-0"
+                // onClick={() => handleRemoveProduct(key)}
+              >
+                <IconX />
+              </Link> */}
+            </div>
+          ))
+        ) : (
+          <div className="px-4 py-4 bg-body-secondary text-center rounded-2">
+            <IconUser width={32} height={32} />
+          </div>
+        )}
+        <div className="d-flex flex-column gap-1">          
+          <button className="btn btn-sm btn-primary" {...getRootProps()}>
+            <input {...getInputProps()} className="hidden" />
+            <IconCloudUp /> Upload A Photo
+          </button>
+          <button className="btn btn-square btn-outline-light" onClick={() => handleRemoveProduct(0)}>Remove</button>
+        </div>
+        {/* <div
+              className="profile-pic text-center cursor-pointer"
+              {...getRootProps()}
+            >
+              <input {...getInputProps()} className="hidden" />
+              <span>
+                <PlusCircle className="plus-down-add" />
+                Profile Photo
+              </span>
+            </div> */}
+      </div>
+
+      {/* <div className="profile-pic-upload mb-2">
         {encodedFiles && encodedFiles.length > 0 ? (
           encodedFiles?.map((v, key: number) => (
             <div
@@ -115,26 +171,17 @@ const ProfilePicUpload = ({
             </div>
           ))
         ) : (
-          <div
-            className="profile-pic text-center cursor-pointer"
-            {...getRootProps()}
-          >
-            <input {...getInputProps()} className="hidden" />
-            <span>
-              <PlusCircle className="plus-down-add" />
-              Profile Photo
-            </span>
-          </div>
-        )}
-        <div className="input-blocks mb-0">
+          <></>
+        )}*/}
+      {/* <div className="input-blocks mb-0">
           <div className="image-upload mb-0">
             <input type="file" />
             <div className="image-uploads">
               <h4>Change Image</h4>
             </div>
           </div>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
     </>
   );
 };

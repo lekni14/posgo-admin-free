@@ -5,6 +5,7 @@ export const all_routes = {
   signin: "/signin",
   salesreport: "salesreport",
   permissions: "/permissions",
+  rolespermission: "/roles-permissions",
 };
 //   newdashboard: "/new-dashboard",
 // export const all_routes = {
