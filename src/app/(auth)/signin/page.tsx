@@ -1,10 +1,13 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, type LoginForm } from "@/lib/schemas/auth";
-import { useLogin } from "@/hooks/auth/use-auth";
+import { loginSchema, type LoginForm } from "lib/schemas/auth";
+import { useLogin } from "hooks/auth/use-auth";
+import { redirect } from "next/navigation";
+import { Button } from "react-bootstrap";
+import Spinner from "@/components/uiinterface/spinner";
 
 export default function Signin() {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -20,7 +23,13 @@ export default function Signin() {
   });
 
   // const { mutate: login, isLoading, isError, error } = useLogin();
-  const { mutate: login, isError, error } = useLogin();
+  const { mutate: login, isError, error, isSuccess } = useLogin();
+
+  useEffect(() => {
+    if (isSuccess) {
+      redirect("/dashboard");
+    }
+  }, [isSuccess]);
 
   const onSubmit = async (data: LoginForm) => {
     try {
@@ -36,15 +45,15 @@ export default function Signin() {
       console.error("Login error:", error);
 
       // Check if it's an SDK initialization error
-      if ((error as any)?.message?.includes("Auth client not initialized")) {
-        // toast.error('System not properly configured. Please check API key configuration.');
-      } else {
-        // toast.error(
-        //   (error as any)?.response?.data?.error?.message ||
-        //     (error as any)?.response?.data?.message ||
-        //     'Login failed. Please try again.',
-        // );
-      }
+      // if ((error as any)?.message?.includes("Auth client not initialized")) {
+      //   // toast.error('System not properly configured. Please check API key configuration.');
+      // } else {
+      //   // toast.error(
+      //   //   (error as any)?.response?.data?.error?.message ||
+      //   //     (error as any)?.response?.data?.message ||
+      //   //     'Login failed. Please try again.',
+      //   // );
+      // }
     }
   };
   return (
@@ -143,6 +152,16 @@ export default function Signin() {
                           >
                             Sign In
                           </button>
+                          {/* <Button
+                            type="submit"
+                            disabled={isPending}
+                            // loading={isPending}
+                            // onClick={() => enterLoading(2)}
+                            // iconPlacement="end"
+                          >
+                             {isPending ? <><Spinner  />Loading...</> : 'Sign In'}
+                             
+                          </Button> */}
                         </div>
                       </div>
                     </div>

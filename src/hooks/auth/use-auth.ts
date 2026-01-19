@@ -1,11 +1,11 @@
 
-import { createSession } from "@/app/lib/session";
+import { createSession } from "app/lib/session";
 import {
   authService,
   LoginCredentials,
   LoginResponse,
-} from "@/services/auth.service";
-import { useAuthStore } from "@/stores/auth-store";
+} from "services/auth.service";
+import { useAuthStore } from "stores/auth-store";
 import {
   useMutation,
   UseMutationOptions,
@@ -41,7 +41,7 @@ export const useLogin = (
       // Example: redirect to dashboard
       await createSession(data);
       queryClient.setQueryData(['user'], data);
-      window.location.href = "/dashboard"
+      // window.location.href = "/dashboard"
       // redirect('/dashboard')
 
     },

@@ -1,9 +1,8 @@
 import { IconCloudUp, IconPencil, IconUser, IconX } from "@tabler/icons-react";
 import Link from "next/link";
 import { useDropzone } from "react-dropzone";
-import { PlusCircle } from "react-feather";
 import { useCallback } from "react";
-import { convertBlobToBinaryString, resizeImage } from "@/lib/image";
+import { convertBlobToBinaryString, resizeImage } from "lib/image";
 
 type TEncodedFile = {
   name: string;

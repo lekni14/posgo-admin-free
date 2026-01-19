@@ -1,4 +1,4 @@
-import { all_routes } from "@/data/all_routes";
+import { all_routes } from "data/all_routes";
 
 const route = all_routes;
 export const SidebarData = [

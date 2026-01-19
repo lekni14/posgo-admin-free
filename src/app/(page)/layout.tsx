@@ -1,6 +1,5 @@
-import Header from "@/core/common/header/header";
-import HorizontalSidebar from "@/core/common/sidebar/horizontalSidebar";
-import Sidebar from "@/core/common/sidebar/sidebar";
+import Header from "core/common/header/header";
+import Sidebar from "core/common/sidebar/sidebar";
 
 export default function PageLayout({
   children,

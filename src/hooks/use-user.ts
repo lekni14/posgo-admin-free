@@ -1,8 +1,8 @@
 'use client';
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { userService, type UserSearchParams, type WalkInRegistrationPayload } from '@/services/user.service';
-import type { User, UserSearchResponse } from '@/services/user.service';
+import { userService, type UserSearchParams, type WalkInRegistrationPayload } from 'services/user.service';
+import type { RegisterUserData, User, UserSearchResponse, BackendError } from 'services/user.service';
 
 // ================================
 // Query Keys
@@ -90,21 +90,31 @@ export function useUser(id: string, enabled = true) {
  * ```
  */
 export function useCreateUser() {
-  const queryClient = useQueryClient();
-
-  return useMutation<User, Error, WalkInRegistrationPayload>({
-    mutationFn: async (payload: WalkInRegistrationPayload) => {
-      return userService.register(payload);
-    },
+  // const queryClient = useQueryClient();
+return useMutation<User, BackendError, WalkInRegistrationPayload>({
+    mutationFn: userService.register,
     onSuccess: (data) => {
-      // Invalidate and refetch user lists
-      queryClient.invalidateQueries({ queryKey: userKeys.lists() });
-      // Optionally set the new user in cache
-      queryClient.setQueryData(userKeys.detail(data.id), data);
+      // data is of type PostData
+      console.log('Post created:', data.id);
     },
     onError: (error) => {
-      console.error('Failed to register user:', error);
+      // error is of type ApiError
+      console.error('Error creating post:', error?.data);
     },
   });
+  // return useMutation<User, Error, WalkInRegistrationPayload>({
+  //   mutationFn: async (payload: WalkInRegistrationPayload) => {
+  //     return userService.register(payload);
+  //   },
+  //   onSuccess: (data) => {
+  //     // Invalidate and refetch user lists
+  //     queryClient.invalidateQueries({ queryKey: userKeys.lists() });
+  //     // Optionally set the new user in cache
+  //     queryClient.setQueryData(userKeys.detail(data.id), data);
+  //   },
+  //   onError: (error) => {
+  //     console.error('Failed to register user:', error);
+  //   },
+  // });
 }
 

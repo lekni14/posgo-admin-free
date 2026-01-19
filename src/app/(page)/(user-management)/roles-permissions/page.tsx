@@ -1,13 +1,13 @@
 "use client";
-import CollapesIcon from "@/core/common/tooltip-content/collapes";
-import RefreshIcon from "@/core/common/tooltip-content/refresh";
-import TooltipIcons from "@/core/common/tooltip-content/tooltipIcons";
-import { all_routes } from "@/data/all_routes";
+import CollapesIcon from "core/common/tooltip-content/collapes";
+import RefreshIcon from "core/common/tooltip-content/refresh";
+import TooltipIcons from "core/common/tooltip-content/tooltipIcons";
+import { all_routes } from "data/all_routes";
 
-import Table from "@/core/common/pagination/datatable";
+import Table from "core/common/pagination/datatable";
 import Link from "next/link";
 import { PlusCircle } from "react-feather";
-import { useListRoles } from "@/hooks/use-role";
+import { useListRoles } from "hooks/use-role";
 
 export default function RolesPermissions() {
   

@@ -1,14 +1,14 @@
 "use client";
 
-import CollapesIcon from "@/core/common/tooltip-content/collapes";
-import RefreshIcon from "@/core/common/tooltip-content/refresh";
-import TooltipIcons from "@/core/common/tooltip-content/tooltipIcons";
-import AddUsers from "@/core/_modals/usermanagement/addusers";
-import EditUser from "@/core/modals/usermanagement/edituser";
+import CollapesIcon from "core/common/tooltip-content/collapes";
+import RefreshIcon from "core/common/tooltip-content/refresh";
+import TooltipIcons from "core/common/tooltip-content/tooltipIcons";
+import AddUsers from "core/_modals/usermanagement/addusers";
+import EditUser from "core/modals/usermanagement/edituser";
 import Link from "next/link";
 import { IconUser } from "@tabler/icons-react";
-import Table from "@/core/common/pagination/datatable";
-import { useSearchUsers } from "@/hooks/use-user";
+import Table from "core/common/pagination/datatable";
+import { useSearchUsers } from "hooks/use-user";
 import { useState } from "react";
 import { User } from "react-feather";
 
@@ -143,7 +143,7 @@ export default function Users() {
           <div className="page-header">
             <div className="add-item d-flex">
               <div className="page-title">
-                <h4>User List</h4>
+                <h4>รายชื่อผู้ใช้งาน</h4>
                 <h6>Manage Your Users</h6>
               </div>
             </div>

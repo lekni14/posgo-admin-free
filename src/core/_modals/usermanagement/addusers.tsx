@@ -5,9 +5,11 @@ import Select from "react-select";
 import { Modal } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { createUserForm, createUserSchema } from "@/lib/schemas/user";
-import { useListRoles } from "@/hooks/use-role";
-import ProfilePicUpload from "@/core/common/profilepicupload";
+import { createUserForm, createUserSchema } from "lib/schemas/user";
+import { useListRoles } from "hooks/use-role";
+import ProfilePicUpload from "core/common/profilepicupload";
+import { Role } from "services/role.service";
+import { useCreateUser } from "hooks/use-user";
 // import { Form } from "react-bootstrap";
 
 interface ModalProp {
@@ -24,22 +26,11 @@ interface EncodedFile {
 const AddUsers = ({ open, setOpen }: ModalProp) => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const { data: RoleListResponse, isLoading, isError, error } = useListRoles();
+  const { data: RoleListResponse, isLoading, isError } = useListRoles();
   const [encodedFiles, setEncodedFiles] = useState<EncodedFile[]>([]);
   const [selectedCover, setSelectedCover] = useState<number>(0);
 
-  // useEffect(() => {
-  //   const fetchUnitData = async () => {
-  //     await authService
-  //       .getRoleList()
-  //       .then((response) => {
-  //         setRoleList(response.data);
-  //       })
-  //       // .then((response) => setBrandLists(response.data))
-  //       .catch((err) => console.log(err));
-  //   };
-  //   fetchUnitData();
-  // }, []);
+  const { mutate: createUser, isPending, isSuccess, error } = useCreateUser();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -77,15 +68,7 @@ const AddUsers = ({ open, setOpen }: ModalProp) => {
   });
 
   const onSubmit = async (data: createUserForm) => {
-    try {
-      console.log(data);
-      // login(data);
-
-      //   toast.success('Login successful! Welcome back.');
-    } catch (error) {
-      // Error is handled by the mutation hook and displayed in UI
-      console.error("Login error:", error);
-    }
+    createUser(data);
   };
   console.log(errors);
   return (
@@ -220,7 +203,7 @@ const AddUsers = ({ open, setOpen }: ModalProp) => {
                 // {...register("role")}
                 options={
                   RoleListResponse
-                    ? RoleListResponse.data?.map((v: any) => {
+                    ? RoleListResponse.data?.map((v: Role) => {
                         return {
                           id: v.id,
                           value: v.id,

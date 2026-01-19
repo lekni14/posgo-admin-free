@@ -172,7 +172,7 @@ export class RoleService extends BaseService {
    * Backend: GET /donation/Inventorys/search?keyword=xxx&page=1&limit=10
    */
   async search(params: RoleSearchParams): Promise<RoleSearchResponse> {
-    const queryParams: Record<string, any> = {};
+    const queryParams: Record<string, User> = {};
     if (params.keyword) {
       queryParams.keyword = params.keyword.trim();
     }

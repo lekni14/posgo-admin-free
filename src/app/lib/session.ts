@@ -3,7 +3,7 @@ import { SignJWT, jwtVerify } from "jose";
 // import { RegisterForm } from "@/lib/schemas/auth";
 import { cookies } from "next/headers";
 // import { UserData } from "@/services/user.service";
-import { UserData, LoginResponse } from "@/services/auth.service";
+import { UserData, LoginResponse } from "services/auth.service";
 
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);

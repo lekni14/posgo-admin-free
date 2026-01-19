@@ -1,10 +1,10 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { decrypt } from "@/app/lib/session";
+import { decrypt } from "app/lib/session";
 import { redirect } from "next/navigation";
 import { cache } from "react";
-import { authService } from "@/services/auth.service";
+import { authService } from "services/auth.service";
 import { useQuery } from "@tanstack/react-query";
 // import { decrypt } from './session'
 

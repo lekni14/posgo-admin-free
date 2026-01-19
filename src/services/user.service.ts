@@ -11,7 +11,13 @@ interface BackendResponse<T> {
   message?: string;
   timestamp?: string;
 }
+export interface BackendError {
+  code: number;
+  data: string;
+  message: string;
 
+  // AxiosError<{ message: string }>;
+}
 interface BackendPaginatedResponse<T> {
   code: number;
   data?: {
@@ -136,7 +142,7 @@ export interface UserSearchResponse {
 // Register Inventory Types
 // ========================================
 export interface RegisterUserData {
-  userId: string;
+  // userId: string;
   firstName?: string;
   lastName?: string;
   gender?: string; // UUID
@@ -156,63 +162,30 @@ export interface RegisterUserData {
 
 // Walk-in Registration Payload (matches WalkInRegistrationDto)
 export interface WalkInRegistrationPayload {
-  InventoryData: {
-    InventoryId?: string;
-    firstName: string;
-    lastName: string;
-    nationalId: string;
-    dateOfBirth: Date;
-    age: number;
-    weight: number;
-    height: number;
-    biologicalSex: "female" | "male";
-    gender: "woman" | "man" | "transwoman" | "transman"; // Enum value, not UUID
-    phoneNumber: string;
-    emergencyPhoneNumber: string;
-    email?: string;
-    addressNumber: string;
-    road?: string;
-    alley?: string;
-    subDistrict: string;
-    district: string;
-    province: string;
-    postalCode: string;
-    tambolId?: string; // UUID for tambol (FK)
-    amphoeId?: string; // UUID for amphoe (FK)
-    provinceId?: string; // UUID for province (FK)
-    contactAddressType?: string;
-    occupation:
-      | "student"
-      | "government_military"
-      | "employee"
-      | "monk"
-      | "farmer"
-      | "business"
-      | "other"; // Enum value, not UUID
-    occupationOther?: string;
-    bloodType?: "unknown" | "A" | "B" | "AB" | "O"; // Enum value, not UUID
-    InventoryType: "first_time" | "regular_over_2_years" | "regular"; // Enum value, not UUID
-    donationType: "whole_blood" | "platelets" | "plasma"; // Enum value, not UUID
-    consents?: Array<{
-      consent_type:
-        | "data_usage"
-        | "marketing"
-        | "donation_procedure"
-        | "research";
-      is_consented: boolean;
-      consent_version?: string;
-      signature_image_url?: string;
-      ip_address?: string;
-      witnessed_by_staff_id?: string;
-      note?: string;
-    }>;
-  };
-  donation: {
-    location_id: string; // UUID (required)
-    donation_type_id: string; // UUID (required) - this is UUID, not enum
-    registration_source_id?: string; // UUID (optional)
-    donation_datetime?: Date; // Optional
-    note?: string; // Optional
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  username: string;
+  role: string;
+  active: boolean;
+  mobile: string;
+  site_id: string;
+  pin: string;
+  avatar: string;
+  created_at: string;
+  updated_at: string;
+  userrole: null;
+  role_name: {
+    id: string;
+    role_name: string;
+    role_name_th: string;
+    role_name_en: string;
+    role_name_lo: string;
+    role_access: [];
+    created_at: string;
+    updated_at: string;
+    site_id: string;
   };
 }
 
@@ -319,7 +292,7 @@ export class UserService extends BaseService {
    */
   async getById(id: string): Promise<User> {
     const response = await this.get<BackendResponse<BackendUserEntity>>(
-      `/${id}`
+      `/${id}`,
     );
 
     // Console log response
@@ -363,7 +336,7 @@ export class UserService extends BaseService {
 
     if (response.code !== 200 || !response.data) {
       throw new Error(
-        response.message || "Failed to register Inventory via walk-in"
+        response.message || "Failed to register Inventory via walk-in",
       );
     }
 

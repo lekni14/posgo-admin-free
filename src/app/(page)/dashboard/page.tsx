@@ -5,9 +5,9 @@ import HeatmapChart from "@/components/charts/heartchat";
 import SalesDayChart from "@/components/charts/salesdaychart";
 import SalesStatisticsChart from "@/components/charts/salesstatisticschart";
 import TopCategoryChart from "@/components/charts/topcategory";
-import PredefinedDateRanges from "@/core/common/daterangepicker/datePicker";
-import CommonFooter from "@/core/common/footer/commonFooter";
-import { all_routes } from "@/data/all_routes";
+import PredefinedDateRanges from "core/common/daterangepicker/datePicker";
+import CommonFooter from "core/common/footer/commonFooter";
+import { all_routes } from "data/all_routes";
 import Link from "next/link";
 
 import CountUp from "react-countup";

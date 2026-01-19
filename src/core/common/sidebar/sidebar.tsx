@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
 import { SidebarData } from "../../json/siderbar_data";
-import { all_routes } from "@/data/all_routes";
+import { all_routes } from "data/all_routes";
 import { ChevronsLeft } from "react-feather";
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';

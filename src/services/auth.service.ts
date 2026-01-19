@@ -3,7 +3,7 @@
 import axios from "axios";
 import { apiClient } from "./api-client.service";
 import { BaseService } from "./base.service";
-import { waitForConfig } from "@/stores/app-store";
+import { waitForConfig } from "stores/app-store";
 
 // ========================================
 // Backend Response Types

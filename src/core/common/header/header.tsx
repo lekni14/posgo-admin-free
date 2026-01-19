@@ -1,7 +1,7 @@
 "use client";
 {/* eslint-disable-next-line @next/next/no-img-element */}
 
-import { all_routes } from "@/data/all_routes";
+import { all_routes } from "data/all_routes";
 import { ChevronsLeft, Search } from "react-feather";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -408,7 +408,10 @@ export default function Header() {
                   Settings
                 </Link> */}
                 <hr className="my-2" />
-                <Link className="dropdown-item logout pb-0" href={route.signin}>
+                <Link className="dropdown-item logout pb-0" 
+                  // href={route.signin}
+                  href={"/signin"}
+                >
                   <i className="ti ti-logout me-2" />
                   Logout
                 </Link>

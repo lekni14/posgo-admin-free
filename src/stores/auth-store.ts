@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 // import type { User } from 'win-portal-auth-sdk';
-import { STORAGE_KEYS, OAUTH_TOKEN_KEYS } from '@/lib/constants/storage';
-import { User } from '@/services/user.service';
+import { STORAGE_KEYS, OAUTH_TOKEN_KEYS } from 'lib/constants/storage';
+import { User } from 'services/user.service';
 
 interface AuthState {
   user: User | null;

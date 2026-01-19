@@ -1,4 +1,4 @@
-import { RoleListResponse, RoleSearchParams, roleService } from "@/services/role.service";
+import { RoleListResponse, RoleSearchParams, roleService } from "services/role.service";
 import { useQuery } from "@tanstack/react-query";
 
 
