@@ -11,7 +11,6 @@ import {
   UseMutationOptions,
   useQueryClient,
 } from "@tanstack/react-query";
-import { redirect } from "next/navigation";
 
 export function useAuth() {
   const user = useAuthStore((state) => state.user);

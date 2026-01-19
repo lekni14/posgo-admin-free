@@ -157,36 +157,23 @@ export interface RegisterUserData {
   province?: string;
   postalCode?: string;
   expiresAt: Date;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
 // Walk-in Registration Payload (matches WalkInRegistrationDto)
 export interface WalkInRegistrationPayload {
-  id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  username: string;
-  role: string;
   active: boolean;
-  mobile: string;
-  site_id: string;
-  pin: string;
   avatar: string;
-  created_at: string;
-  updated_at: string;
-  userrole: null;
-  role_name: {
-    id: string;
-    role_name: string;
-    role_name_th: string;
-    role_name_en: string;
-    role_name_lo: string;
-    role_access: [];
-    created_at: string;
-    updated_at: string;
-    site_id: string;
-  };
+  email: string;
+  first_name: string;
+  id: string;
+  last_name: string;
+  mobile: string;
+  password: string;
+  pin: string;
+  role: string;
+  username: string;
 }
 
 // ========================================
@@ -238,6 +225,7 @@ export class UserService extends BaseService {
    * Backend: GET /donation/Inventorys/search?keyword=xxx&page=1&limit=10
    */
   async search(params: UserSearchParams): Promise<UserSearchResponse> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const queryParams: Record<string, any> = {};
     console.log(params);
     if (params.keyword) {
@@ -318,6 +306,8 @@ export class UserService extends BaseService {
    * @param payload - WalkInRegistrationPayload ที่เตรียมไว้แล้วจาก component
    */
   async register(payload: WalkInRegistrationPayload): Promise<User> {
+    console.log(payload);
+    return false;
     // Call backend API - use absolute path
     // Since basePath is /donation/Inventorys, we need to call the API directly
     // We'll use apiClient directly for this endpoint

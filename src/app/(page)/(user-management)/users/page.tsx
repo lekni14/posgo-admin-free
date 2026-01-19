@@ -10,7 +10,6 @@ import { IconUser } from "@tabler/icons-react";
 import Table from "core/common/pagination/datatable";
 import { useSearchUsers } from "hooks/use-user";
 import { useState } from "react";
-import { User } from "react-feather";
 
 export default function Users() {
   const [isCreateOpen, setIsCreateOpen] = useState<boolean>(false);

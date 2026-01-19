@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import { Modal } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { createUserForm, createUserSchema } from "lib/schemas/user";
 import { useListRoles } from "hooks/use-role";
 import ProfilePicUpload from "core/common/profilepicupload";
@@ -26,7 +26,7 @@ interface EncodedFile {
 const AddUsers = ({ open, setOpen }: ModalProp) => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const { data: RoleListResponse, isLoading, isError } = useListRoles();
+  const { data: RoleList, isLoading, isError } = useListRoles();
   const [encodedFiles, setEncodedFiles] = useState<EncodedFile[]>([]);
   const [selectedCover, setSelectedCover] = useState<number>(0);
 
@@ -57,6 +57,8 @@ const AddUsers = ({ open, setOpen }: ModalProp) => {
   }, [open]);
 
   const {
+    setValue,
+    control,
     register,
     handleSubmit,
     formState: { isSubmitted, errors },
@@ -67,8 +69,33 @@ const AddUsers = ({ open, setOpen }: ModalProp) => {
     },
   });
 
+  const fileUploader = async () => {
+    const res = await BusinessService.upLoadImage(
+      encodedFiles[0].name,
+      encodedFiles[0].encoded,
+    );
+    return res.data.ImageUrl;
+  };
   const onSubmit = async (data: createUserForm) => {
-    createUser(data);
+    let avatar = "";
+    if (encodedFiles.length > 0) {
+      avatar = await fileUploader();
+    }
+
+    const payload = {
+      first_name: data.first_name,
+      last_name: data.last_name,
+      username: data.username,
+      password: data.newPassword,
+      email: data.email,
+      mobile: data.mobile,
+      role: data.role,
+      pin: "",
+      id: "",
+      active: true,
+      avatar: avatar,
+    };
+    createUser(payload);
   };
   console.log(errors);
   return (
@@ -198,9 +225,28 @@ const AddUsers = ({ open, setOpen }: ModalProp) => {
           <div className="col-lg-6">
             <div className="input-blocks">
               <label>Role</label>
-              <Select
+              {RoleList ? (
+                <Select
+                  // {...field}
+                  onChange={(e) => (e ? setValue("role", e?.value) : null)}
+                  options={
+                    RoleList.data
+                      ? RoleList.data.map((v: Role) => {
+                          return {
+                            id: v.id,
+                            value: v.id,
+                            label: v.role_name_th,
+                          };
+                        })
+                      : []
+                  }
+                  placeholder="Choose Status"
+                />
+              ) : null}
+
+              {/* <Select
                 classNamePrefix="react-select"
-                // {...register("role")}
+                {...register("role")}
                 options={
                   RoleListResponse
                     ? RoleListResponse.data?.map((v: Role) => {
@@ -213,7 +259,7 @@ const AddUsers = ({ open, setOpen }: ModalProp) => {
                     : []
                 }
                 placeholder="Choose Status"
-              />
+              /> */}
             </div>
           </div>
           <div className="col-lg-6">
@@ -248,9 +294,9 @@ const AddUsers = ({ open, setOpen }: ModalProp) => {
               <div className="pass-group">
                 <input
                   type={showConfirmPassword ? "text" : "password"}
-                  {...register("newPassword")}
+                  {...register("confirmNewPassword")}
                   className={`form-control pass-input ${
-                    errors.newPassword ? "is-invalid" : ""
+                    errors.confirmNewPassword ? "is-invalid" : ""
                   }`}
                   placeholder="Enter your password"
                 />

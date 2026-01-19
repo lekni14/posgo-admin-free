@@ -1,8 +1,8 @@
 'use client';
 
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { userService, type UserSearchParams, type WalkInRegistrationPayload } from 'services/user.service';
-import type { RegisterUserData, User, UserSearchResponse, BackendError } from 'services/user.service';
+import type { User, UserSearchResponse, BackendError } from 'services/user.service';
 
 // ================================
 // Query Keys
