@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { userService, type UserSearchParams, type WalkInRegistrationPayload } from 'services/user.service';
+import { userService, type UserSearchParams, type RegistrationPayload } from 'services/user.service';
 import type { User, UserSearchResponse, BackendError } from 'services/user.service';
 
 // ================================
@@ -90,8 +90,7 @@ export function useUser(id: string, enabled = true) {
  * ```
  */
 export function useCreateUser() {
-  // const queryClient = useQueryClient();
-return useMutation<User, BackendError, WalkInRegistrationPayload>({
+return useMutation<User, BackendError, RegistrationPayload>({
     mutationFn: userService.register,
     onSuccess: (data) => {
       // data is of type PostData

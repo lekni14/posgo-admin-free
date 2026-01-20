@@ -8,9 +8,11 @@ import Table from "core/common/pagination/datatable";
 import Link from "next/link";
 import { PlusCircle } from "react-feather";
 import { useListRoles } from "hooks/use-role";
+import RoleDelete from "core/_modals/usermanagement/roledelete";
+import { useState } from "react";
+import RoleAdd from "core/_modals/usermanagement/roleadd";
 
 export default function RolesPermissions() {
-  
   const route = all_routes;
   const { data: roleList, isLoading, isError, error } = useListRoles();
   const columns = [
@@ -51,19 +53,24 @@ export default function RolesPermissions() {
               <i data-feather="edit" className="feather-edit"></i>
             </Link>
 
-            <Link className="confirm-text p-2" href="#">
-              <i
-                data-feather="trash-2"
-                className="feather-trash-2"
-                data-bs-toggle="modal"
-                data-bs-target="#delete_modal"
-              ></i>
+            <Link
+              className="confirm-text p-2"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsDeleteModal(true);
+              }}
+            >
+              <i data-feather="trash-2" className="feather-trash-2"></i>
             </Link>
           </div>
         </div>
       ),
     },
   ];
+  const [isCreateModal, setIsCreateModal] = useState<boolean>(false);
+  const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
+
   return (
     <div>
       <div className="page-wrapper">
@@ -84,8 +91,10 @@ export default function RolesPermissions() {
               <Link
                 href="#"
                 className="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#add-units"
+                onClick={(event) => {
+                  event.preventDefault();
+                  setIsCreateModal(true)
+                }}
               >
                 <PlusCircle className=" feather me-2" />
                 Add Role
@@ -124,7 +133,11 @@ export default function RolesPermissions() {
             <div className="card-body">
               <div className="table-responsive">
                 {roleList ? (
-                  <Table columns={columns} dataSource={roleList?.data} isLoading={isLoading} />
+                  <Table
+                    columns={columns}
+                    dataSource={roleList?.data}
+                    isLoading={isLoading}
+                  />
                 ) : null}
               </div>
             </div>
@@ -132,42 +145,15 @@ export default function RolesPermissions() {
           {/* /product list */}
         </div>
       </div>
-       {/* <AddRole /> */}
+      {/* <AddRole /> */}
+      <RoleAdd show={isCreateModal} onHide={() => setIsCreateModal(false)} />
       {/*<EditRole /> */}
       <>
-        {/* Delete Product */}
-        <div className="modal fade modal-default" id="delete_modal">
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-body p-0">
-                <div className="success-wrap text-center">
-                  <form>
-                    <div className="icon-success bg-danger-transparent text-danger mb-2">
-                      <i className="ti ti-trash" />
-                    </div>
-                    <h3 className="mb-2">Delete Role</h3>
-                    <p className="fs-16 mb-3">
-                      Are you sure you want to delete role?
-                    </p>
-                    <div className="d-flex align-items-center justify-content-center gap-2 flex-wrap">
-                      <button
-                        type="button"
-                        className="btn btn-md btn-secondary"
-                        data-bs-dismiss="modal"
-                      >
-                        No, Cancel
-                      </button>
-                      <button type="button" className="btn btn-md btn-primary">
-                        Yes, Delete
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* /Delete Product */}
+        {/* Delete Role */}
+        <RoleDelete
+          show={isDeleteModal}
+          onHide={() => setIsDeleteModal(false)}
+        />
       </>
     </div>
   );

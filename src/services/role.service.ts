@@ -1,5 +1,6 @@
 "use client";
 
+import { apiClient } from "./api-client.service";
 import { BaseService } from "./base.service";
 
 // ========================================
@@ -25,28 +26,11 @@ interface BackendPaginatedResponse<T> {
   message?: string;
   timestamp?: string;
 }
-
-// Walk-in Registration Result
-interface WalkInRegistrationResult {
-  donor_id: string;
-  donation_id: string;
-  is_new_donor: boolean;
-  donor: {
-    id: string;
-    code?: string;
-    first_name: string;
-    last_name: string;
-    national_id: string;
-  };
-  donation: {
-    id: string;
-    donation_datetime: string;
-    donation_status: string;
-  };
-  next_step: "pre-screening" | "deferral-check";
+export interface BackendError {
+  code: number;
+  data: string;
   message: string;
 }
-
 // Backend Donor Entity (snake_case)
 interface BackendRoleEntity {
   id: string;
@@ -69,6 +53,7 @@ export interface Role {
   role_name_th: string;
   role_name_en: string;
   role_name_lo: string;
+  role_access: string[];
 }
 
 export interface RoleSearchParams {
@@ -86,11 +71,16 @@ export interface RoleSearchResponse {
   hasPrev: boolean;
 }
 
-
 export interface RoleListResponse {
   data: Role[];
 }
 
+export interface CreatePayload {
+  role_name: string;
+  role_name_th?: string;
+  role_name_en?: string;
+  role_name_lo?: string;
+}
 
 // ========================================
 // Register Donor Types
@@ -129,8 +119,6 @@ export interface RegisterDonorData {
   note?: string; // Optional note
 }
 
-
-
 // ========================================
 // Mapper Functions
 // ========================================
@@ -153,7 +141,6 @@ export class RoleService extends BaseService {
   async lists(): Promise<RoleListResponse> {
     // Call backend API
     const response = await this.get<BackendResponse<BackendRoleEntity[]>>("/");
-    console.log(response);
 
     // Transform backend response to frontend format
     if (response.code !== 200 || !response.data) {
@@ -167,12 +154,13 @@ export class RoleService extends BaseService {
     };
   }
 
-   /**
+  /**
    * Search Role by keyword
    * Backend: GET /donation/Inventorys/search?keyword=xxx&page=1&limit=10
    */
   async search(params: RoleSearchParams): Promise<RoleSearchResponse> {
-    const queryParams: Record<string, User> = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const queryParams: Record<string, any> = {};
     if (params.keyword) {
       queryParams.keyword = params.keyword.trim();
     }
@@ -206,29 +194,36 @@ export class RoleService extends BaseService {
       limit: params.limit || 10,
       hasNext: false,
       hasPrev: false,
-    }; 
+    };
   }
-  /**
-   * Get donor by ID
-   * Backend: GET /donation/donors/:id
-   */
-  // async getById(id: string): Promise<Donor> {
-  //   const response = await this.get<BackendResponse<BackendDonorEntity>>(`/${id}`);
+  async create(payload: CreatePayload): Promise<Role> {
+    // async create(payload:CreatePayload): Promise<BackendResponse<BackendRoleEntity>> {
+    const response = await apiClient.post<BackendResponse<BackendRoleEntity>>(
+      ``,
+      payload,
+    );
+    // if (response.code !== 200 || !response.data) {
 
-  //   // Console log response
-  //   console.log('🔵 [Donor API] GET /donation/donors/:id', {
-  //     endpoint: `/donation/donors/${id}`,
-  //     method: 'GET',
-  //     id: id,
-  //     response: response,
-  //   });
-
-  //   if (!response.success || !response.data) {
-  //     throw new Error('Donor not found');
-  //   }
-
-  //   return mapBackendToFrontend(response.data);
-  // }
+    // }
+    return {
+      id: "",
+      role_name: "",
+      role_name_th: "",
+      role_name_en: "",
+      role_name_lo: "",
+      role_access: [],
+    };
+  }
+  async remove(
+    id: number | string,
+  ): Promise<BackendResponse<BackendRoleEntity>> {
+    const response = await apiClient.delete<BackendResponse<BackendRoleEntity>>(
+      `/${id}`,
+    );
+    console.log(response);
+    // const response = await axios.delete<DeleteResponse>(`/api/items/${id}`);
+    return response;
+  }
 }
 
 // Export singleton instance

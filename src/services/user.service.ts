@@ -162,7 +162,7 @@ export interface RegisterUserData {
 }
 
 // Walk-in Registration Payload (matches WalkInRegistrationDto)
-export interface WalkInRegistrationPayload {
+export interface RegistrationPayload {
   active: boolean;
   avatar: string;
   email: string;
@@ -305,9 +305,8 @@ export class UserService extends BaseService {
    *
    * @param payload - WalkInRegistrationPayload ที่เตรียมไว้แล้วจาก component
    */
-  async register(payload: WalkInRegistrationPayload): Promise<User> {
+  async register(payload: RegistrationPayload): Promise<User> {
     console.log(payload);
-    return false;
     // Call backend API - use absolute path
     // Since basePath is /donation/Inventorys, we need to call the API directly
     // We'll use apiClient directly for this endpoint

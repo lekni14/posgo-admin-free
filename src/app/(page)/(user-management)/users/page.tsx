@@ -3,7 +3,7 @@
 import CollapesIcon from "core/common/tooltip-content/collapes";
 import RefreshIcon from "core/common/tooltip-content/refresh";
 import TooltipIcons from "core/common/tooltip-content/tooltipIcons";
-import AddUsers from "core/_modals/usermanagement/addusers";
+import AddUsers from "core/_modals/usermanagement/useradd";
 import EditUser from "core/modals/usermanagement/edituser";
 import Link from "next/link";
 import { IconUser } from "@tabler/icons-react";
